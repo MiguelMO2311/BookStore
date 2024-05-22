@@ -1,13 +1,12 @@
 import Logo from "./logo";
-// import Menu from "./menu";
-import { CSSProperties } from 'react';
+import Menu from "./menu";
 
-const Header = (props: { style: CSSProperties | undefined; }) => {
+
+const Header = () => {
     return (
         <>
-        <header style={props.style}>
-           <Logo/>
-           {/* <Menu/> */}
+        <header className="flex justify-between max-h-30 p-3 bg-lime-600">
+           <Logo/> <Menu/>
         </header>
         </>
     );

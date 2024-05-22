@@ -1,11 +1,11 @@
 
 function Logo () {
-  const anchoLogo = 50;
+
 
   return (
-    <>
-      <img src="/imgs/logo.png" width={anchoLogo}  alt="logo" />
-    </>
+    <div className="flex justify-start">
+      <img src="/imgs/logo.png" width={'75'}  alt="logo" />
+    </div>
   )
 }
 

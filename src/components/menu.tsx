@@ -1,14 +1,11 @@
-import { Link } from 'react-router-dom';
 
 const Menu = () => {
     return (
-        <nav>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/books">Books</Link></li>
-                <li><Link to="/login">Log In</Link></li>
-            </ul>
-        </nav>
+            <nav className="flex justify-between mr-10">
+            <a className="ml-8" href="/HomePage">Home</a>
+            <a className="ml-8"href="/BooksPage">Books</a>
+            <a className="ml-8"href="/Login">Log In</a>
+            </nav>
     );
 };
 

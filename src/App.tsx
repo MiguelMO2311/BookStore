@@ -1,41 +1,21 @@
-import './App.css';
+
 import Footer from './components/footer';
 import Header from './components/header';
 
+
 function App() {
-  const styles = {
-    app: {
-      display: 'flex',
-      alignItems: 'start',
-      flexDirection: 'column' as const, // Asegúrate de que el valor sea uno de los permitidos
-      minHeight: '90vh',
-      minWidth: '100vw'
-    },
-    header: {
-      flex: 'start',
-      alignItems: 'start'
-    },
-    content: {
-      flex: '1'
-    },
-    footer: {
-
-      gap:'350px'
-
-    },
-  };
+ 
 
   return (
     
-    <div style={styles.app}>   
-      <Header style={styles.header} />
+    <div className="flex start-auto flex-col min-h-svh min-w-full bg-red-500">   
+      <Header/>
       
-      {/* Aquí irá el contenido principal de la aplicación */}
-      <div style={styles.content}>
-        {/* Contenido */}
-      </div>
+  <div className='min-h-screen'>
+    {/* aqui va el body */}
+  </div>
       
-      <Footer style={styles.footer}/>
+      <Footer/>
     </div>    
 
   )
