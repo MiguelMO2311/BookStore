@@ -1,13 +1,15 @@
-import Logo from "./logo";
-// import Menu from "./menu";
+import Logo from "./Logo";
+import Menu from "./Menu";
 import { CSSProperties } from 'react';
 
 const Header = (props: { style: CSSProperties | undefined; }) => {
+
+    
     return (
         <>
         <header style={props.style}>
            <Logo/>
-           {/* <Menu/> */}
+           <Menu/>
         </header>
         </>
     );

@@ -1,6 +1,5 @@
-import './App.css';
-import Footer from './components/footer';
-import Header from './components/header';
+import Footer from './components/Footer';
+import Header from './components/Header';
 
 function App() {
   const styles = {
@@ -12,9 +11,11 @@ function App() {
       minWidth: '100vw'
     },
     header: {
+      display:'flex',
       flex: 'start',
       alignItems: 'start'
     },
+    
     content: {
       flex: '1'
     },
@@ -29,6 +30,7 @@ function App() {
     
     <div style={styles.app}>   
       <Header style={styles.header} />
+  
       
       {/* Aquí irá el contenido principal de la aplicación */}
       <div style={styles.content}>
