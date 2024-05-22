@@ -1,6 +1,7 @@
 import Footer from './components/Footer';
 import Header from './components/Header';
 
+
 function App() {
   const styles = {
     app: {
@@ -12,7 +13,12 @@ function App() {
     },
     header: {
       display:'flex',
-      flex: 'start',
+      justifyContent: 'center',
+      alignItems: 'start'
+    },
+    menu:{
+      display:'flex',
+      justifyContent: 'center',
       alignItems: 'start'
     },
     
@@ -28,12 +34,11 @@ function App() {
 
   return (
     
-    <div style={styles.app}>   
+    <div className=" flex items-start flex-col bg-red-500 min-h-screen min-w-full">   
       <Header style={styles.header} />
-  
       
       {/* Aquí irá el contenido principal de la aplicación */}
-      <div style={styles.content}>
+      <div className="flex-1">
         {/* Contenido */}
       </div>
       
