@@ -5,10 +5,10 @@ import Menu from "./menu";
 const Header = () => {
     return (
         <>
-        <header className="flex justify-evenly max-h-30 p-3 bg-green-200 text-yellow-500 font-semibold">
-           <Logo/>
-           <Menu/>
-        </header>
+            <header className="flex justify-evenly max-h-30 p-3 bg-green-200 font-semibold">
+                <Logo />
+                <Menu />
+            </header>
         </>
     );
 };
