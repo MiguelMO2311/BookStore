@@ -1,23 +1,27 @@
 import { useState, useEffect } from 'react';
 import Logo from "./logo";
-import SideBar from "./SideBar"; 
-import Menu from "./Menu"; // Agrega la importación del componente Menu
+import SideBar from "./SideBar";
+import Menu from "./Menu"; // Asegúrate de importar el componente Menu
+import { BiListPlus } from "react-icons/bi"; // Importa el icono para abrir
+import { CgPlayListRemove } from "react-icons/cg"; // Importa el icono para cerrar
 
 const Header = () => {
     const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-    const [showMenu, setShowMenu] = useState(true); // Cambio aquí: Inicialmente mostramos el menú
+    const [showMenu, setShowMenu] = useState(true);
 
-    // Actualiza la visibilidad del menú según el tamaño de la pantalla
     useEffect(() => {
         const handleResize = () => {
-            setShowMenu(window.innerWidth >= 768); // 768px es el ancho para modo md
+            if (window.innerWidth >= 768) {
+                setShowMenu(true);
+                setIsOpenSidebar(false); // Cierra la barra lateral cuando la ventana es de tamaño tableta o más grande
+            } else {
+                setShowMenu(false);
+            }
         };
 
-        // Agrega un listener para el evento de cambio de tamaño de la ventana
         window.addEventListener('resize', handleResize);
-        handleResize(); // Llama a la función al inicio para establecer el valor inicial
+        handleResize();
 
-        // Limpia el listener cuando el componente se desmonta
         return () => {
             window.removeEventListener('resize', handleResize);
         };
@@ -31,15 +35,15 @@ const Header = () => {
                     className="md:hidden" 
                     onClick={() => {
                         setIsOpenSidebar(!isOpenSidebar);
-                        setShowMenu(false); // Ocultar el menú al abrir la barra lateral
+                        setShowMenu(false);
                     }}
+                    style={{ fontSize: '15px' }} // Establece el tamaño del texto a 15px
                 >
-                    {isOpenSidebar ? 'Cerrar menú' : 'Abrir menú'}
+                    {isOpenSidebar ? <CgPlayListRemove size={50} /> : <BiListPlus size={50} />} {/* Usa los iconos con tamaño de 50 */}
+                    {isOpenSidebar ? 'Cerrar' : 'Abrir'}
                 </button>
-                {/* Contenedor para los enlaces del menú */}
                 <nav className={`md:flex ${showMenu ? 'block' : 'hidden'}`}>
-                    {/* Aquí va el componente Menu */}
-                    <Menu />
+                    <Menu /> {/* Añade el componente Menu aquí */}
                 </nav>
             </header>
             <SideBar isOpen={isOpenSidebar} setIsOpen={setIsOpenSidebar} />
