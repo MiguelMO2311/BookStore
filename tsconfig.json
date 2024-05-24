@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/components/Menu.tsx"],
+  "include": ["src", "src/components/menu.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
