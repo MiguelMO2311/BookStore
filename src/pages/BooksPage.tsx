@@ -5,7 +5,7 @@ function BooksPage() {
 
   return (
     <div className="flex flex-row justify-center">
-    <BooksList/>
+      <BooksList />
     </div>
   );
 

@@ -1,5 +1,5 @@
-import { CiTrash } from "react-icons/ci"; 
-import { BsPencilSquare } from "react-icons/bs"; 
+import { CiTrash } from "react-icons/ci";
+import { BsPencilSquare } from "react-icons/bs";
 import { Book } from "../models/book";
 
 const BookItem: React.FC<{ book: Book }> = ({ book }) => {
@@ -9,7 +9,7 @@ const BookItem: React.FC<{ book: Book }> = ({ book }) => {
   };
 
   const handleDeleteBook = () => {
-   // Aquí se definirá lo que hará el evento hadleDeleteBook cuando se haga clic en el botón de delete
+    // Aquí se definirá lo que hará el evento hadleDeleteBook cuando se haga clic en el botón de delete
     console.log("Eliminar libro");
   };
 

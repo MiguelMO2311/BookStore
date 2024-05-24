@@ -1,5 +1,4 @@
 
-
 type Book = {
     book_id: number;
     user_id: number;

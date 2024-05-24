@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Logo from "./logo";
 import SideBar from "./SideBar";
-import Menu from "./Menu"; // Asegúrate de importar el componente Menu
-import { BiListPlus } from "react-icons/bi"; // Importa el icono para abrir
-import { CgPlayListRemove } from "react-icons/cg"; // Importa el icono para cerrar
+import Menu from "./Menu";
+import { CgPlayListRemove } from "react-icons/cg";
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 const Header = () => {
     const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -13,7 +13,7 @@ const Header = () => {
         const handleResize = () => {
             if (window.innerWidth >= 768) {
                 setShowMenu(true);
-                setIsOpenSidebar(false); // Cierra la barra lateral cuando la ventana es de tamaño tableta o más grande
+                setIsOpenSidebar(false); // Cierra la barra lateral cuando la ventana es de tamaño tablet o más grande
             } else {
                 setShowMenu(false);
             }
@@ -31,19 +31,19 @@ const Header = () => {
         <>
             <header className="relative max-h-30 p-3 bg-green-200 font-semibold flex justify-between items-center w-full">
                 <Logo />
-                <button 
-                    className="md:hidden" 
+                <button
+                    className="md:hidden"
                     onClick={() => {
                         setIsOpenSidebar(!isOpenSidebar);
                         setShowMenu(false);
                     }}
-                    style={{ fontSize: '15px' }} // Establece el tamaño del texto a 15px
+                    style={{ fontSize: '15px' }}
                 >
-                    {isOpenSidebar ? <CgPlayListRemove size={50} /> : <BiListPlus size={50} />} {/* Usa los iconos con tamaño de 50 */}
+                    {isOpenSidebar ? <CgPlayListRemove size={50} /> : <GiHamburgerMenu size={50} />} {/* Usa los iconos con tamaño de 50 */}
                     {isOpenSidebar ? 'Cerrar' : 'Abrir'}
                 </button>
                 <nav className={`md:flex ${showMenu ? 'block' : 'hidden'}`}>
-                    <Menu /> {/* Añade el componente Menu aquí */}
+                    <Menu isOpen={isOpenSidebar} setIsOpen={setIsOpenSidebar} />
                 </nav>
             </header>
             <SideBar isOpen={isOpenSidebar} setIsOpen={setIsOpenSidebar} />
@@ -52,3 +52,4 @@ const Header = () => {
 };
 
 export default Header;
+
