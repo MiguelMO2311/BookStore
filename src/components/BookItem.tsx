@@ -27,7 +27,7 @@ const BookItem: React.FC<{ book: Book }> = ({ book }) => {
       </div>
       <h2 className="text-lg font-bold text-blue-500">{book.title}</h2>
       <h3 className="text-sm font-semibold text-black">{book.author}</h3>
-      <p className={`text-xs ${book.type === 'Soft-Cover' ? 'bg-yellow-500 text-orange-500' : 'bg-green-200'} p-1 rounded`}>
+      <p className={`text-xs ${book.type === 'Soft-Cover' ? 'bg-yellow-200 text-orange-500' : 'bg-yellow-600'} p-1 rounded`}>
   {book.type}
 </p>
 
