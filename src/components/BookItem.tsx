@@ -1,8 +1,15 @@
 import { CiTrash } from "react-icons/ci";
 import { BsPencilSquare } from "react-icons/bs";
 import { Book } from "../models/book";
+ 
 
 const BookItem: React.FC<{ book: Book }> = ({ book }) => {
+
+  const formattedPrice = book.price.toLocaleString('es-ES', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   const handleEditBook = () => {
     // Aquí se definirá lo que hará el evento hadleEditBook cuando se haga clic en el botón de editar
     console.log("Editar libro");
@@ -20,15 +27,19 @@ const BookItem: React.FC<{ book: Book }> = ({ book }) => {
       </div>
       <h2 className="text-lg font-bold text-blue-500">{book.title}</h2>
       <h3 className="text-sm font-semibold text-black">{book.author}</h3>
-      <p className="text-xs bg-yellow-600 text-white p-1 rounded">{book.type}</p>
-      <div className="flex justify-between w-full px-4 items-center">
-        <p className="text-lg font-semibold text-green-500">{book.price}<span className="text-lg font-normal text-black"> €</span></p>
+      <p className={`text-xs ${book.type === 'Soft-Cover' ? 'bg-yellow-500 text-orange-500' : 'bg-green-200'} p-1 rounded`}>
+  {book.type}
+</p>
+
+<p className="text-lg font-semibold text-green-500">
+        {formattedPrice} <span className="text-lg font-normal text-black">€</span>
+      </p>
         <div className="space-x-2">
           <button aria-label="Edit" className="text-blue-500" onClick={handleEditBook}><BsPencilSquare /></button>
           <button aria-label="Delete" className="text-red-500" onClick={handleDeleteBook}><CiTrash /></button>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

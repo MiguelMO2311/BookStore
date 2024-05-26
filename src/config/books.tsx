@@ -17,7 +17,7 @@ const books: Book[] = [
         title: '1984',
         photo: 'https://imagessl6.casadellibro.com/a/l/s5/16/9788408287216.webp',
         author: 'George Orwell',
-        type: 'Soft-cover',
+        type: 'Soft-Cover',
         price: 9.99
     },
     {
