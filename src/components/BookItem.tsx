@@ -1,6 +1,6 @@
 import { CiTrash } from "react-icons/ci";
 import { BsPencilSquare } from "react-icons/bs";
-import { Book } from "../models/book";
+import { Book } from "../models/Book";
  
 
 const BookItem: React.FC<{ book: Book }> = ({ book }) => {
@@ -38,8 +38,7 @@ const BookItem: React.FC<{ book: Book }> = ({ book }) => {
           <button aria-label="Edit" className="text-blue-500" onClick={handleEditBook}><BsPencilSquare /></button>
           <button aria-label="Delete" className="text-red-500" onClick={handleDeleteBook}><CiTrash /></button>
         </div>
-      </div>
-    // </div>
+    </div>
   );
 };
 

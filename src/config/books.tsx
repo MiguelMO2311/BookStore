@@ -1,4 +1,4 @@
-import { Book } from "../models/book";
+import { Book } from "../models/Book";
 
 // Array de libros
 const books: Book[] = [

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import Logo from "./logo";
+import Logo from "./Logo";
 import SideBar from "./SideBar";
-import Menu from "./menu";
+import Menu from "./Menu";
 import { CgPlayListRemove } from "react-icons/cg";
 import { GiHamburgerMenu } from 'react-icons/gi';
 

@@ -1,13 +1,13 @@
 
 
-function Login() {
+function LogIn() {
 
     return (
         <div >
-
+ <h1>Page LogIn</h1>
         </div>
     );
 
 }
 
-export default Login;
+export default LogIn;
