@@ -1,7 +1,7 @@
 import { AiOutlineUserDelete } from "react-icons/ai";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 type MenuProps = {
     className?: string;
@@ -30,9 +30,10 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
                         </>
                     ) : (
                         <>
+                            <NavLink className="ml-8 text-blue-700 hover:text-blue-400" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
                             <NavLink className="ml-8 text-lime-600 hover:text-lime-400" to="/Register" onClick={() => setIsOpen(false)}>Register</NavLink>
-                            <Link className=" space-x-8 ml-10 text-white hover:text-black px-1 py-2 border-2 border-green-100 rounded hover:bg-yellow-500"
-                                to="/Login" onClick={() => setIsOpen(false)}>Log In</Link>
+                            <NavLink className=" space-x-8 ml-10 text-white hover:text-black px-1 py-2 border-2 border-green-100 rounded hover:bg-yellow-500"
+                                to="/Login" onClick={() => setIsOpen(false)}>Log In</NavLink>
                         </>
                     )}
                 </div>
