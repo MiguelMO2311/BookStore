@@ -1,6 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import Footer from './components/Footer';
-import Header from './components/Header';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -8,8 +6,10 @@ import AddBook from './pages/AddBook';
 import EditBook from './pages/EditBook';
 import PrivateRoutes from './components/PrivateRoutes';
 import PublicRoutes from './components/PublicRoutes';
-import LogIn from './pages/LogIn';
 import BooksPage from './pages/BooksPage';
+import Header from './components/header';
+import LogIn from './pages/Login';
+import Footer from './components/footer';
 
 
 function App() {
