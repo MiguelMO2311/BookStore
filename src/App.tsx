@@ -7,9 +7,10 @@ import EditBook from './pages/EditBook';
 import PrivateRoutes from './components/PrivateRoutes';
 import PublicRoutes from './components/PublicRoutes';
 import BooksPage from './pages/BooksPage';
-import Header from './components/header';
-import LogIn from './pages/Login';
-import Footer from './components/footer';
+import Header from './components/Header';
+import LogIn from './pages/LogIn';
+import Footer from './components/Footer';
+
 
 
 function App() {

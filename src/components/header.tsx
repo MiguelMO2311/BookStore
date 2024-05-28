@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import SideBar from "./SideBar";
 import { CgPlayListRemove } from "react-icons/cg";
 import { GiHamburgerMenu } from 'react-icons/gi';
-import Logo from './logo';
+import Logo from './Logo';
 import Menu from './Menu';
 
 const Header = () => {

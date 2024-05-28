@@ -1,5 +1,5 @@
 
-import books from "../config/books";
+import books from "../config/Books";
 import BookItem from "./BookItem";
 
 function BooksList() {
