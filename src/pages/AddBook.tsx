@@ -13,7 +13,7 @@ const AddBook: React.FC = () => {
     title: '',
     author: '',
     type: '',
-    photo: '../assets/Default_Book.jpg', // Ruta a la imagen por defecto
+    photo: '../assets/No_Book.jpg', // Ruta a la imagen por defecto
     price: '',
   });
 
