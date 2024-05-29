@@ -67,7 +67,7 @@ const Register: React.FC = () => {
                 </div>
               ))}
               <div className="flex items-center justify-between">
-                <button className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-[105%]" type="submit">
+                <button className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline sm:ml-[105%] sm:py-2 sm:px-4 " type="submit">
                   Regístrate
                 </button>
               </div>

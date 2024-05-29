@@ -88,7 +88,7 @@ const EditBook: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <button className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-[55%]" type="submit">
+            <button className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-[55%] sm:py-2 sm:px-4" type="submit">
               Editar Libro
             </button>
           </div>
