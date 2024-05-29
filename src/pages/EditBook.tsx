@@ -1,96 +1,103 @@
-import React, { useState, FormEvent } from 'react';
+import React from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-type FormData = {
-  title: string;
-  author: string;
-  type: string;
-  photo: string;
-  price: string;
-};
+// Define el esquema de Zod para la validación
+const bookSchema = z.object({
+  title: z.string().min(1, 'El título es requerido.'),
+  author: z.string().min(1, 'El autor es requerido.'),
+  type: z.string().min(1, 'El tipo es requerido.'),
+  photo: z.string().url('Debe ser una URL válida.'),
+  price: z.string().min(1, 'El precio es requerido.').regex(/^\d+(\.\d{1,2})?$/, 'Formato de precio no válido.'),
+});
 
-const EditBook: React.FC = () => {
-  // Suponiendo que obtienes un libro existente para editar
-  // Aquí deberías reemplazar los valores por defecto con los datos del libro a editar
-  const [formData, setFormData] = useState<FormData>({
-    title: '',
-    author: '',
-    type: '',
-    photo: '../assets/Default_Book.jpg', // Ruta a la imagen por defecto
-    price: '',
+type FormData = z.infer<typeof bookSchema>;
+
+const AddBook: React.FC = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+    resolver: zodResolver(bookSchema),
   });
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    // Aquí deberías implementar la lógica para actualizar los datos del libro
-    console.log('Datos del libro actualizados:', formData);
-  };
-
-  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setFormData(prevState => ({ ...prevState, photo: (e.target as FileReader).result as string }));
-      };
-      reader.readAsDataURL(target.files[0]);
-    }
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData(prevState => ({ ...prevState, [name]: value }));
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log('Datos del libro:', data);
   };
 
   return (
-    <div className="flex justify-center items-start pt-5 border-dashed h-[80%]">
-      <div className="w-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
-        <h1 className="text-2xl font-bold m-3 text-slate-800 hover:text-green-300">Editar Libro</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="flex">
-            <div className="w-1/4 mr-4">
-              {/* Campo de photo */}
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold m-2" htmlFor="photo">
-                  Foto:
-                </label>
-                <input
-                  type="file"
-                  id="photo"
-                  name="photo"
-                  className="text-sm text-transparent file:m-2 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-slate-500 file:text-white hover:file:bg-slate-800"
-                  onChange={handlePhotoChange}
-                />
-                {/* Contenedor de la imagen */}
-                <div className="flex flex-col justify-center items-center w-full h-56 bg-cover bg-center rounded p-2">
-                  {/* Aquí se mostrará la imagen */}
-                  <img src={formData.photo} alt="Portada del libro" className="h-full w-full object-cover rounded" />
-                </div>
-              </div>
-            </div>
-            <div className="flex-grow">
-              {/* Campos del formulario excepto photo */}
-              {Object.entries(formData).filter(([key]) => key !== 'photo').map(([key, value]) => (
-                <div key={key} className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={key}>
-                    {key.charAt(0).toUpperCase() + key.slice(1)}:
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
-                    id={key}
-                    type="text"
-                    name={key}
-                    placeholder={`Introduce el ${key}`}
-                    value={value}
-                    onChange={handleChange}
-                  />
-                </div>
-              ))}
-            </div>
+    <div className="flex justify-center items-start pt-5 my-5 border-dashed h-1/3">
+      <div className="w-2/3 h-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
+      <button 
+            className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right" 
+            type="submit"
+          >
+            Editar Libro
+          </button>
+        <h1 className="text-2xl font-bold m-1 text-slate-800 hover:text-lime-200">Editar Libro</h1> 
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+          <div className="mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
+              Título:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="title"
+              type="text"
+              {...register('title')}
+              placeholder="Introduce el título"
+            />
+            {errors.title && <p className="text-red-500 text-xs italic">{errors.title.message}</p>}
           </div>
-          <div className="flex items-center justify-between">
-            <button className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-[55%] sm:py-2 sm:px-4" type="submit">
-              Editar Libro
-            </button>
+          <div className="mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="author">
+              Autor:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="author"
+              type="text"
+              {...register('author')}
+              placeholder="Introduce el autor"
+            />
+            {errors.author && <p className="text-red-500 text-xs italic">{errors.author.message}</p>}
+          </div>
+          <div className="mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="type">
+              Tipo:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="type"
+              type="text"
+              {...register('type')}
+              placeholder="Introduce el tipo"
+            />
+            {errors.type && <p className="text-red-500 text-xs italic">{errors.type.message}</p>}
+          </div>
+          <div className="mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="photo">
+              URL de la Foto:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="photo"
+              type="text"
+              {...register('photo')}
+              placeholder="Introduce la URL de la foto"
+            />
+            {errors.photo && <p className="text-red-500 text-xs italic">{errors.photo.message}</p>}
+          </div>
+          <div className="mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
+              Precio:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="price"
+              type="text"
+              {...register('price')}
+              placeholder="Introduce el precio"
+            />
+            {errors.price && <p className="text-red-500 text-xs italic">{errors.price.message}</p>}
           </div>
         </form>
       </div>
@@ -98,4 +105,5 @@ const EditBook: React.FC = () => {
   );
 };
 
-export default EditBook;
+export default AddBook;
+

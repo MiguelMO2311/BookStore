@@ -8,7 +8,7 @@ const books: Book[] = [
         title: 'To Kill a Mockingbird',
         photo: 'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1369587093i/455592.jpg',
         author: 'Harper Lee',
-        type: 'Hard-cover',
+        type: 'Hard-Cover',
         price: 10.99
     },
     {

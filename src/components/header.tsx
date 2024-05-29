@@ -29,7 +29,7 @@ const Header = () => {
 
     return (
         <>
-            <header className="relative max-h-30 p-3 bg-green-800 font-semibold flex justify-between items-center w-full">
+            <header className="relative max-h-28 p-3 bg-green-800 font-semibold flex justify-between items-center w-full">
                 <Logo />
                 <button
                     className="md:hidden"
@@ -40,7 +40,7 @@ const Header = () => {
                     style={{ fontSize: '15px' }}
 
                 >
-                    {isOpenSidebar ? <CgPlayListRemove size={50} /> : <GiHamburgerMenu size={50} />}
+                    {isOpenSidebar ? <CgPlayListRemove size={30} /> : <GiHamburgerMenu size={30} />}
                     {isOpenSidebar ? 'Close' : 'Open'}
                 </button>
                 <nav className={`md:flex ${showMenu ? 'block' : 'hidden'}`}>

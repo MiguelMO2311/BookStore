@@ -37,7 +37,7 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
                         </>
                     )}
                 </div>
-                <button onClick={toggleUser} style={{ fontSize: '14px', margin: '5%', width: '40px' }}>
+                <button onClick={toggleUser} style={{ fontSize: '8px', margin: '5%', width: '40px' }}>
                     {user ? <AiOutlineUserDelete size={30} color="red" /> : <AiOutlineUserAdd size={30} color="white" />}
                     <span style={{ color: user ? 'red' : 'white' }}>
                         {user ? ' DEL User' : ' ADD User'}
