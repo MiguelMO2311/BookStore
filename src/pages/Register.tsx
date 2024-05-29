@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 
 type FormData = {
-  user_id?: number,
+
   name: string;
   surname: string;
   email: string;
@@ -19,10 +19,8 @@ type FormErrors = {
   passwordRepeat?: string;
 };
 
-
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    
     name: '',
     surname: '',
     email: '',
@@ -32,69 +30,63 @@ const Register: React.FC = () => {
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const validateForm = (): boolean => {
+  const validateForm = (): FormErrors => {
     const tempErrors: FormErrors = {};
 
     tempErrors.name = !formData.name
       ? 'El nombre es requerido.'
       : formData.name.length < 3
       ? 'El nombre debe tener al menos 3 caracteres.'
-      : '';
+      : undefined;
 
     tempErrors.surname = !formData.surname
       ? 'El apellido es requerido.'
       : formData.surname.length < 3
       ? 'El apellido debe tener al menos 3 caracteres.'
-      : '';
+      : undefined;
 
     tempErrors.email = !formData.email
       ? 'El email es requerido.'
       : !/\S+@\S+\.\S+/.test(formData.email)
       ? 'El formato del email no es válido.'
-      : '';
+      : undefined;
 
     tempErrors.password = !formData.password
       ? 'La contraseña es requerida.'
       : formData.password.length < 4 || formData.password.length > 12
       ? 'La contraseña debe tener entre 4 y 12 caracteres.'
-      : '';
+      : undefined;
 
-    tempErrors.passwordRepeat = formData.passwordRepeat
-      ? formData.password !== formData.passwordRepeat
-        ? 'Las contraseñas no coinciden.'
-        : ''
-      : '';
+    tempErrors.passwordRepeat = !formData.passwordRepeat
+      ? 'Es necesario repetir la contraseña.'
+      : formData.password !== formData.passwordRepeat
+      ? 'Las contraseñas no coinciden.'
+      : undefined;
 
-    setErrors(tempErrors);
-    return !Object.values(tempErrors).some(error => error);
+    return tempErrors;
   };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (validateForm()) {
+    const newErrors = validateForm();
+    setErrors(newErrors);
+    setFormSubmitted(true);
+    if (Object.keys(newErrors).length === 0) {
       console.log('Datos del formulario:', formData);
+      // Aquí iría el código para manejar los datos del formulario, como enviarlos a un servidor.
     }
   };
 
-  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setFormData(prevState => ({ ...prevState, photo: (e.target as FileReader).result as string }));
-      };
-      reader.readAsDataURL(target.files[0]);
-    }
-  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData(prevState => ({ ...prevState, [name]: value }));
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   return (
-    <div className="flex justify-center items-start border-dashed pt-3">
+    <div className="flex justify-center align-middle border-dashed items-center ml-auto p-3 w-5/6">
       <div className="w-2/3 shadow-md rounded px-8 pt-4 pb-4 mb-4 hover:bg-white">
         <h1 className="text-2xl font-bold mb-2 text-slate-800 hover:text-lime-500">Regístrate</h1>
         <div className="flex">
@@ -114,11 +106,11 @@ const Register: React.FC = () => {
                     value={value}
                     onChange={handleChange}
                   />
-                  {errors[key] && <p className="text-red-500 text-xs italic">{errors[key]}</p>}
+                  {formSubmitted && errors[key] && <p className="text-red-500 text-xs italic">{errors[key]}</p>}
                 </div>
               ))}
               <div className="flex items-center justify-between">
-                <button className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline sm:ml-[105%] sm:py-2 sm:px-4 " type="submit">
+                <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline sm:ml-[78%] sm:py-2 sm:px-4">
                   Regístrate
                 </button>
               </div>
@@ -126,19 +118,6 @@ const Register: React.FC = () => {
           </div>
           <div className="w-1/4 ml-4">
             <div className="mb-4 mt-24">
-              <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="photo">
-                Foto:
-              </label>
-              <input
-                type="file"
-                id="photo"
-                name="photo"
-                className="text-sm text-transparent file:m-2 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-slate-500 file:text-white hover:file:bg-slate-800"
-                onChange={handlePhotoChange}
-              />
-            </div>
-            <div className="flex flex-col justify-center items-center w-40 h-40 bg-cover bg-center rounded p-2">
-              <img src={formData.photo} alt="Foto del usuario" className="h-full w-full object-cover rounded" />
             </div>
           </div>
         </div>

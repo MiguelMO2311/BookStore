@@ -19,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate replace to="/home" />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/edit-book/:bookId" element={<EditBook />} />
 
           <Route element={<PublicRoutes />}>
             <Route path="/login" element={<LogIn />} />

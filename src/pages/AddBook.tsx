@@ -26,13 +26,7 @@ const AddBook: React.FC = () => {
   return (
     <div className="flex justify-center items-start pt-5 my-5 border-dashed h-1/3">
       <div className="w-2/3 h-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
-      <button 
-            className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right" 
-            type="submit"
-          >
-            Añadir Libro
-          </button>
-        <h1 className="text-2xl font-bold m-1 text-slate-800 hover:text-yellow-300">Añadir Libro</h1> 
+        <h1 className="text-2xl font-bold m-1 text-slate-800 hover:text-yellow-300">Añadir Libro</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
           <div className="mb-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
@@ -98,6 +92,12 @@ const AddBook: React.FC = () => {
               placeholder="Introduce el precio"
             />
             {errors.price && <p className="text-red-500 text-xs italic">{errors.price.message}</p>}
+            <button
+          className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right"
+          type="submit"
+        >
+          Añadir Libro
+        </button>
           </div>
         </form>
       </div>
