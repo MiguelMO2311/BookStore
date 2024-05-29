@@ -12,11 +12,11 @@ const EditBook: React.FC = () => {
   // Suponiendo que obtienes un libro existente para editar
   // Aquí deberías reemplazar los valores por defecto con los datos del libro a editar
   const [formData, setFormData] = useState<FormData>({
-    title: 'Título existente',
-    author: 'Autor existente',
-    type: 'Tipo existente',
+    title: '',
+    author: '',
+    type: '',
     photo: '../assets/Default_Book.jpg', // Ruta a la imagen por defecto
-    price: 'Precio existente',
+    price: '',
   });
 
   const handleSubmit = (event: FormEvent) => {
