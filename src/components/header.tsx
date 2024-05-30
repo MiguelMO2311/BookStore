@@ -3,7 +3,7 @@ import SideBar from "./SideBar";
 import { CgPlayListRemove } from "react-icons/cg";
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Logo from './Logo';
-import Menu from './Menu';
+import Menu from './menu';
 
 const Header = () => {
     const [isOpenSidebar, setIsOpenSidebar] = useState(false);
