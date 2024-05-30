@@ -93,7 +93,7 @@ const AddBook: React.FC = () => {
             />
             {errors.price && <p className="text-red-500 text-xs italic">{errors.price.message}</p>}
             <button
-          className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right"
+          className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right mt-5"
           type="submit"
         >
           Añadir Libro

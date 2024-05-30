@@ -86,10 +86,9 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center align-middle border-dashed items-center ml-auto p-3 w-5/6">
-      <div className="w-2/3 shadow-md rounded px-8 pt-4 pb-4 mb-4 hover:bg-white">
+    <div className="flex justify-center border-dashed items-center ml-[10%] my-10 p-3 w-5/6 h-auto">
+      <div className="  mb-8 w-2/3 shadow-md rounded px-8 hover:bg-white">
         <h1 className="text-2xl font-bold mb-2 text-slate-800 hover:text-lime-500">Regístrate</h1>
-        <div className="flex">
           <div className="flex-grow">
             <form onSubmit={handleSubmit} className="space-y-4">
               {Object.entries(formData).map(([key, value]) => (
@@ -110,7 +109,7 @@ const Register: React.FC = () => {
                 </div>
               ))}
               <div className="flex items-center justify-between">
-                <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline sm:ml-[78%] sm:py-2 sm:px-4">
+                <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold pb-2 px-4 rounded focus:outline-none focus:shadow-outline sm:ml-[78%] sm:py-2 sm:px-4">
                   Regístrate
                 </button>
               </div>
@@ -121,7 +120,6 @@ const Register: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };
