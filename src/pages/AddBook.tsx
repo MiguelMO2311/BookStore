@@ -2,6 +2,10 @@ import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+
 
 // Define el esquema de Zod para la validación
 const bookSchema = z.object({
@@ -20,11 +24,19 @@ const AddBook: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log('Datos del libro:', data);
+    axios.post('http://localhost:3000/books', data)
+      .then(() => {
+        toast.success('¡Libro añadido con éxito!');
+      })
+      .catch(error => {
+        toast.error('Error al añadir el libro: ' + error.message);
+      });
   };
 
   return (
+    
     <div className="flex justify-center items-start pt-5 my-5 border-dashed h-1/3">
+      <ToastContainer />
       <div className="w-2/3 h-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
         <h1 className="text-2xl font-bold m-1 text-slate-800 hover:text-yellow-300">Añadir Libro</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">

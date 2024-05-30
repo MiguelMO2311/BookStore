@@ -10,6 +10,7 @@ import BooksPage from './pages/BooksPage';
 import Header from './components/Header';
 import LogIn from './pages/LogIn';
 import Footer from './components/Footer';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
             <Route path="/editBook" element={<EditBook />} />
           </Route>
         </Routes>
+        
+        <ToastContainer />
+
       </div>
       <Footer />
     </div>

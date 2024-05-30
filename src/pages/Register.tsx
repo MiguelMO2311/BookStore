@@ -1,4 +1,5 @@
 import React, { useState, FormEvent } from 'react';
+import axios from 'axios';
 
 type FormData = {
 
@@ -68,17 +69,25 @@ const Register: React.FC = () => {
     return tempErrors;
   };
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    const newErrors = validateForm();
-    setErrors(newErrors);
-    setFormSubmitted(true);
-    if (Object.keys(newErrors).length === 0) {
-      console.log('Datos del formulario:', formData);
-      // Aquí iría el código para manejar los datos del formulario, como enviarlos a un servidor.
-    }
-  };
-
+ // Manejador del envío del formulario
+ const handleSubmit = (event: FormEvent) => {
+  event.preventDefault();
+  const newErrors = validateForm();
+  setErrors(newErrors);
+  setFormSubmitted(true);
+  if (Object.keys(newErrors).length === 0) {
+    // Aquí usamos Axios para enviar los datos
+    axios.post('URL_DEL_ENDPOINT_DE_REGISTRO', formData)
+    .then(response => {
+      console.log('Respuesta del servidor:', response.data);
+      // Aquí puedes manejar la respuesta del servidor, como redirigir al usuario
+    })
+    .catch(error => {
+      console.error('Error al enviar los datos:', error);
+      // Aquí puedes manejar el error, como mostrar un mensaje al usuario
+    });
+  }
+};
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

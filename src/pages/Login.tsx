@@ -1,4 +1,5 @@
 import React, { useState, FormEvent } from 'react';
+import axios from 'axios';
 
 // Definición de tipos para los datos del formulario y los errores
 type FormData = {
@@ -49,8 +50,19 @@ const LogIn: React.FC = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (validateForm()) {
-      console.log('Usuario:', formData.name);
-      console.log('Contraseña:', formData.password);
+      // Aquí usamos Axios para enviar los datos
+      axios.post('URL_DEL_ENDPOINT_DE_LOGIN', {
+        name: formData.name,
+        password: formData.password
+      })
+      .then(response => {
+        console.log('Respuesta del servidor:', response.data);
+        // Aquí puedes manejar la respuesta del servidor, como redirigir al usuario
+      })
+      .catch(error => {
+        console.error('Error al enviar los datos:', error);
+        // Aquí puedes manejar el error, como mostrar un mensaje al usuario
+      });
     }
   };
 
