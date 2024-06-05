@@ -1,7 +1,7 @@
-import { AiOutlineUserDelete } from "react-icons/ai";
-import { AiOutlineUserAdd } from "react-icons/ai";
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+import { AiOutlineUserAdd, AiOutlineUserDelete } from "react-icons/ai";
 
 type MenuProps = {
     className?: string;
@@ -10,10 +10,17 @@ type MenuProps = {
 };
 
 const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
-    const [user, setUser] = useState<unknown | null>(null);
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate(); // Hook para navegar
 
-    const toggleUser = () => {
-        setUser(user ? null : {}); // Cambia el estado del usuario cuando se hace clic en el botón
+    const logOut = () => {
+        setUser(null); // Esto es válido si UserType incluye null
+        localStorage.removeItem('userInfo');
+    };
+
+    const handleLogin = () => {
+        setIsOpen(false); // Cierra el menú
+        navigate('/login'); // Navega a la página de LogIn
     };
 
     return (
@@ -22,32 +29,32 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
                 <div className={`flex ${isOpen ? 'flex-col' : ''} justify-start`}>
                     {user ? (
                         <>
-                            <NavLink className="ml-8 text-blue-700 hover:text-blue-400" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
-                            <NavLink className="ml-8 text-red-700 hover:text-red-300" to="/BooksPage" onClick={() => setIsOpen(false)}>Books</NavLink>
-                            <NavLink className="ml-8 text-purple-700 hover:text-purple-300" to="/Profile" onClick={() => setIsOpen(false)}>Profile</NavLink>
-                            <NavLink className="ml-8 text-yellow-700 hover:text-yellow-300" to="/AddBook" onClick={() => setIsOpen(false)}>Add Book</NavLink>
-                            <NavLink className="ml-8 text-green-700 hover:text-green-300" to="/EditBook" onClick={() => setIsOpen(false)}>Edit Book</NavLink>
+                            {/* Enlaces para usuario logueado */}
+                            <NavLink className="ml-8 text-red-500 hover:text-red-400" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
+                            <NavLink className="ml-8 text-blue-500 hover:text-blue-400" to="/booksPage" onClick={() => setIsOpen(false)}>Books</NavLink>
+                            <NavLink className="ml-8 text-gray-800 hover:text-gray-500" to="/profile" onClick={() => setIsOpen(false)}>Profile</NavLink>
+                            <NavLink className="ml-8 text-green-600 hover:text-green-400" to="/addBook" onClick={() => setIsOpen(false)}>AddBook</NavLink>
+                            
+                            <button onClick={logOut} className="ml-8 flex items-center text-yellow-400 hover:bg-yellow-400
+                             hover:text-black focus:outline-none border-2 border-green-700 rounded-lg p-1 transition-colors
+                             duration-200"><AiOutlineUserDelete size={20} color="red" /><span className="text-xs ml-1">Log Out</span>
+                            </button>
                         </>
                     ) : (
                         <>
-                            <NavLink className="ml-8 text-blue-700 hover:text-blue-400" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
-                            <NavLink className="ml-8 text-lime-600 hover:text-lime-400" to="/Register" onClick={() => setIsOpen(false)}>Register</NavLink>
-                            <NavLink className=" space-x-8 ml-10 text-white hover:text-black px-1 py-2 border-2 border-green-100 rounded hover:bg-yellow-500"
-                                to="/Login" onClick={() => setIsOpen(false)}>Log In</NavLink>
+                            {/* Enlaces para usuario no logueado */}
+                            <NavLink className="ml-8 text-blue-700 hover:text-white" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
+                            <NavLink className="ml-8 text-lime-600 hover:text-white" to="/Register" onClick={() => setIsOpen(false)}>Register</NavLink>
+                            <button onClick={handleLogin} className="flex items-center ml-16 text-white hover:bg-yellow-400 hover:text-black focus:outline-none border-2 border-green-700 rounded-lg p-1 transition-colors duration-200 "> <AiOutlineUserAdd size={20} color="white" /> 
+                            <span className="text-xs ml-1">Log In</span>
+                            </button>
+
                         </>
                     )}
                 </div>
-                <button onClick={toggleUser} style={{ fontSize: '8px', margin: '5%', width: '40px' }}>
-                    {user ? <AiOutlineUserDelete size={30} color="red" /> : <AiOutlineUserAdd size={30} color="white" />}
-                    <span style={{ color: user ? 'red' : 'white' }}>
-                        {user ? ' DEL User' : ' ADD User'}
-                    </span>
-                </button>
-
             </nav>
         </div>
     );
 };
-
 
 export default Menu;

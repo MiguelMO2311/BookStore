@@ -11,35 +11,43 @@ import Header from './components/Header';
 import LogIn from './pages/LogIn';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
+import { UserProvider } from './context/UserContext';
+import Pagina404 from './pages/ErrorPage404';
 
 function App() {
+  
+  
   return (
-    <div className="flex flex-col min-h-svh min-w-full bg-slate-100">
-      <Header />
-      <div style={{ flexGrow: 1 }}>
-        <Routes>
-          <Route path="/" element={<Navigate replace to="/home" />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/edit-book/:bookId" element={<EditBook />} />
+    <UserProvider> {/* Envuelve tu aplicación con UserProvider */}
+      <div className="flex flex-col min-h-svh min-w-full bg-slate-100">
+        <Header />
+        <div style={{ flexGrow: 1 }}>
+          <Routes>
+            <Route path="/" element={<Navigate replace to="/home" />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/edit-book/:bookId" element={<EditBook />} />
+            <Route path="*" element={<Pagina404 />} />
 
-          <Route element={<PublicRoutes />}>
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/register" element={<Register />} />
-          </Route>
+            <Route element={<PublicRoutes />}>
+              <Route path="/login" element={<LogIn />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
 
-          <Route element={<PrivateRoutes />}>
-            <Route path="/BooksPage" element={<BooksPage />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/addBook" element={<AddBook />} />
-            <Route path="/editBook" element={<EditBook />} />
-          </Route>
-        </Routes>
-        
-        <ToastContainer />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/BooksPage" element={<BooksPage />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/addBook" element={<AddBook />} />
+              <Route path="/editBook" element={<EditBook />} />
+             
 
+            </Route>
+          </Routes>
+          
+          <ToastContainer />
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </UserProvider>
   );
 }
 

@@ -1,7 +1,7 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from '../context/UserContext';
 
-// Definición de tipos para los datos del formulario y los errores
 type FormData = {
   name: string;
   password: string;
@@ -13,15 +13,14 @@ type FormErrors = {
 };
 
 const LogIn: React.FC = () => {
+  const { setUser } = useContext(UserContext);
   const [formData, setFormData] = useState<FormData>({ name: '', password: '' });
   const [errors, setErrors] = useState<FormErrors>({});
 
-  // Función para validar el formulario
   const validateForm = (): boolean => {
     const tempErrors: FormErrors = {};
     let formIsValid: boolean = true;
 
-    // Validación del nombre
     if (!formData.name) {
       formIsValid = false;
       tempErrors.name = 'El nombre es requerido.';
@@ -30,13 +29,9 @@ const LogIn: React.FC = () => {
       tempErrors.name = 'El nombre debe tener al menos 3 caracteres.';
     }
 
-    // Validación de la contraseña
     if (!formData.password) {
       formIsValid = false;
       tempErrors.password = 'La contraseña es requerida.';
-    } else if (formData.password.length < 4) {
-      formIsValid = false;
-      tempErrors.password = 'La contraseña debe tener al menos 5 caracteres.';
     } else if (formData.password.length < 4 || formData.password.length > 12) {
       formIsValid = false;
       tempErrors.password = 'La contraseña debe tener entre 4 y 12 caracteres.';
@@ -46,27 +41,24 @@ const LogIn: React.FC = () => {
     return formIsValid;
   };
 
-  // Manejador del envío del formulario
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateForm()) {
-      // Aquí usamos Axios para enviar los datos
-      axios.post('URL_DEL_ENDPOINT_DE_LOGIN', {
+      axios.post('/api/login', {
         name: formData.name,
         password: formData.password
       })
       .then(response => {
-        console.log('Respuesta del servidor:', response.data);
-        // Aquí puedes manejar la respuesta del servidor, como redirigir al usuario
+        setUser(response.data.user);
+        localStorage.setItem('userInfo', JSON.stringify(response.data.user));
+        // Aquí podrías redirigir al usuario a su perfil o a la página principal
       })
       .catch(error => {
-        console.error('Error al enviar los datos:', error);
-        // Aquí puedes manejar el error, como mostrar un mensaje al usuario
+        console.error('Error al iniciar sesión:', error);
       });
     }
   };
 
-  // Manejador de cambios en los campos del formulario
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));

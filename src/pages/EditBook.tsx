@@ -1,27 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-// Define el esquema de Zod para la validación
 const bookSchema = z.object({
-  book_id: z.string(),
+  book_id: z.number(),
   title: z.string().min(1, 'El título es requerido.'),
   author: z.string().min(1, 'El autor es requerido.'),
   type: z.string().min(1, 'El tipo es requerido.'),
   photo: z.string().url('Debe ser una URL válida.'),
-  price: z.string().min(1, 'El precio es requerido.').regex(/^\d+(\.\d{1,2})?$/, 'Formato de precio no válido.'),
+  price: z.number().min(0, 'El precio es requerido.'),
 });
 
 type FormData = z.infer<typeof bookSchema>;
 
 const EditBook: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: zodResolver(bookSchema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log('Datos del libro:', data);
+  useEffect(() => {
+    const bookId = location.state?.book_id;
+    if (bookId) {
+      // Aquí deberías reemplazar la URL con la ruta correcta de tu API
+      fetch(`/api/books/${bookId}`)
+        .then(response => response.json())
+        .then(data => {
+          reset(data); // Actualiza los valores del formulario con los datos del libro
+        })
+        .catch(error => console.error('Error al cargar los datos del libro:', error));
+    }
+  }, [location.state, reset]);
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    // Aquí deberías reemplazar la URL con la ruta correcta de tu API
+    const response = await fetch(`http://localhost:3000/books/${data.book_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      console.log('Libro actualizado con éxito');
+      navigate('/'); // Redirige a la página de inicio después de la edición
+    } else {
+      console.error('Error al actualizar el libro');
+    }
   };
 
   return (

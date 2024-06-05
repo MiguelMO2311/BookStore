@@ -1,8 +1,8 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from '../context/UserContext';
 
 type FormData = {
-
   name: string;
   surname: string;
   email: string;
@@ -21,11 +21,12 @@ type FormErrors = {
 };
 
 const Register: React.FC = () => {
+  const { setUser } = useContext(UserContext);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     surname: '',
     email: '',
-    photo: '../assets/No_User.jpg', // Ruta a la imagen por defecto
+    photo: '../assets/No_User.jpg', // Asegúrate de actualizar la ruta a la imagen por defecto
     password: '',
     passwordRepeat: ''
   });
@@ -33,102 +34,147 @@ const Register: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const validateForm = (): FormErrors => {
+  const validateForm = (): boolean => {
     const tempErrors: FormErrors = {};
+    let isValid = true;
 
-    tempErrors.name = !formData.name
-      ? 'El nombre es requerido.'
-      : formData.name.length < 3
-      ? 'El nombre debe tener al menos 3 caracteres.'
-      : undefined;
+    // Validaciones aquí...
+    if (!formData.name) {
+      isValid = false;
+      tempErrors.name = 'El nombre es requerido.';
+    }
+    if (!formData.surname) {
+      isValid = false;
+      tempErrors.surname = 'El apellido es requerido.';
+    }
+    if (!formData.email) {
+      isValid = false;
+      tempErrors.email = 'El email es requerido.';
+    }
+    if (!formData.password) {
+      isValid = false;
+      tempErrors.password = 'La contraseña es requerida.';
+    }
+    if (formData.password !== formData.passwordRepeat) {
+      isValid = false;
+      tempErrors.passwordRepeat = 'Las contraseñas no coinciden.';
+    }
 
-    tempErrors.surname = !formData.surname
-      ? 'El apellido es requerido.'
-      : formData.surname.length < 3
-      ? 'El apellido debe tener al menos 3 caracteres.'
-      : undefined;
-
-    tempErrors.email = !formData.email
-      ? 'El email es requerido.'
-      : !/\S+@\S+\.\S+/.test(formData.email)
-      ? 'El formato del email no es válido.'
-      : undefined;
-
-    tempErrors.password = !formData.password
-      ? 'La contraseña es requerida.'
-      : formData.password.length < 4 || formData.password.length > 12
-      ? 'La contraseña debe tener entre 4 y 12 caracteres.'
-      : undefined;
-
-    tempErrors.passwordRepeat = !formData.passwordRepeat
-      ? 'Es necesario repetir la contraseña.'
-      : formData.password !== formData.passwordRepeat
-      ? 'Las contraseñas no coinciden.'
-      : undefined;
-
-    return tempErrors;
+    setErrors(tempErrors);
+    return isValid;
   };
 
- // Manejador del envío del formulario
- const handleSubmit = (event: FormEvent) => {
-  event.preventDefault();
-  const newErrors = validateForm();
-  setErrors(newErrors);
-  setFormSubmitted(true);
-  if (Object.keys(newErrors).length === 0) {
-    // Aquí usamos Axios para enviar los datos
-    axios.post('URL_DEL_ENDPOINT_DE_REGISTRO', formData)
-    .then(response => {
-      console.log('Respuesta del servidor:', response.data);
-      // Aquí puedes manejar la respuesta del servidor, como redirigir al usuario
-    })
-    .catch(error => {
-      console.error('Error al enviar los datos:', error);
-      // Aquí puedes manejar el error, como mostrar un mensaje al usuario
-    });
-  }
-};
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    const isValid = validateForm();
+    setFormSubmitted(true); // Esto establecerá formSubmitted en true cuando el formulario se envíe
+  
+    if (isValid) {
+      // Lógica para enviar los datos al servidor
+      axios.post('/api/register', formData)
+        .then(response => {
+          // Actualiza el contexto del usuario y guarda en localStorage
+          setUser(response.data.user);
+          localStorage.setItem('userInfo', JSON.stringify(response.data.user));
+          // Redirige al usuario o maneja la respuesta como sea necesario
+        })
+        .catch(error => {
+          console.error('Error al enviar los datos:', error);
+        });
+    }
+  };
+  
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
+    setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
   return (
-    <div className="flex justify-center border-dashed items-center ml-[10%] my-10 p-3 w-5/6 h-auto">
-      <div className="  mb-8 w-2/3 shadow-md rounded px-8 hover:bg-white">
-        <h1 className="text-2xl font-bold mb-2 text-slate-800 hover:text-lime-500">Regístrate</h1>
-          <div className="flex-grow">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {Object.entries(formData).map(([key, value]) => (
-                <div key={key} className="mb-3">
-                  <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor={key}>
-                    {key.charAt(0).toUpperCase() + key.slice(1)}:
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
-                    id={key}
-                    type={key === 'password' || key === 'passwordRepeat' ? 'password' : key === 'email' ? 'email' : 'text'}
-                    name={key}
-                    placeholder={`Introduce tu ${key}`}
-                    value={value}
-                    onChange={handleChange}
-                  />
-                  {formSubmitted && errors[key] && <p className="text-red-500 text-xs italic">{errors[key]}</p>}
-                </div>
-              ))}
-              <div className="flex items-center justify-between">
-                <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold pb-2 px-4 rounded focus:outline-none focus:shadow-outline sm:ml-[78%] sm:py-2 sm:px-4">
-                  Regístrate
-                </button>
-              </div>
-            </form>
+    <div className="flex justify-center items-start pt-10 border-dashed ">
+      <div className="w-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
+        <h1 className="text-2xl font-bold mb-3 text-slate-800 hover:text-indigo-300">Regístrate</h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+              Nombre:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="name"
+              type="text"
+              name="name"
+              placeholder="Tu nombre"
+              value={formData.name}
+              onChange={handleChange}
+            />
+            {formSubmitted && errors.name && <p className="text-red-500 text-xs italic">{errors.name}</p>}
           </div>
-          <div className="w-1/4 ml-4">
-            <div className="mb-4 mt-24">
-            </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="surname">
+              Apellido:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="surname"
+              type="text"
+              name="surname"
+              placeholder="Tu apellido"
+              value={formData.surname}
+              onChange={handleChange}
+            />
+            {formSubmitted && errors.surname && <p className="text-red-500 text-xs italic">{errors.surname}</p>}
           </div>
-        </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+              Email:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Tu email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {formSubmitted && errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              Contraseña:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Tu contraseña"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            {formSubmitted && errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="passwordRepeat">
+              Repetir Contraseña:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              id="passwordRepeat"
+              type="password"
+              name="passwordRepeat"
+              placeholder="Repite tu contraseña"
+              value={formData.passwordRepeat}
+              onChange={handleChange}
+            />
+            {formSubmitted && errors.passwordRepeat && <p className="text-red-500 text-xs italic">{errors.passwordRepeat}</p>}
+          </div>
+          <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Registrarse
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

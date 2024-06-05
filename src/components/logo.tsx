@@ -39,8 +39,8 @@ function AnimatedTitle() {
 function Logo() {
   return (
     <div className="flex start-2 justify-start w-px-4 items-center h-20">
-      <img src="/imgs/logo.png" alt="logo" width={100} height={30} />
-      <div className="text-3xl font-extrabold text-amber-400 hover:text-black">
+      <img src="/imgs/logotipo.png" alt="logo" width={100} height={30} />
+      <div className="text-3xl font-extrabold text-amber-400 hover:text-black, bg-transparent">
         <AnimatedTitle /> {/* Agrega el componente AnimatedTitle */}
       </div>
     </div>
