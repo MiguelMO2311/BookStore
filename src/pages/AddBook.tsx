@@ -6,7 +6,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
-
 // Define el esquema de Zod para la validación
 const bookSchema = z.object({
   title: z.string().min(1, 'El título es requerido.'),
@@ -24,13 +23,32 @@ const AddBook: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    axios.post('http://localhost:3000/books', data)
-      .then(() => {
-        toast.success('¡Libro añadido con éxito!');
-      })
-      .catch(error => {
-        toast.error('Error al añadir el libro: ' + error.message);
-      });
+    // Obtén el userInfo del almacenamiento local
+    const userInfoString = localStorage.getItem('userInfo');
+     // Convierte el precio a un número
+     const priceAsNumber = Number(data.price);
+    
+    if (userInfoString !== null) {
+      const userInfo = JSON.parse(userInfoString);
+      
+      // Asegúrate de que userInfo y userInfo.user_id existen
+      if (userInfo && userInfo.user_id) {
+        // Añade el user_id al objeto data
+        const dataWithUserId = { ...data, user_id: Number(userInfo.user_id), price: priceAsNumber };
+        console.log(dataWithUserId)
+        axios.post('http://localhost:3000/add', dataWithUserId)
+        .then(response => {
+          // Aquí puedes manejar la respuesta del servidor
+          console.log(response.data);
+          toast.success('¡Libro añadido con éxito!');
+        })
+        .catch(error => {
+          toast.error('Error al añadir el libro: ' + error.message);
+        });
+      } else {
+        console.error('userInfo o userInfo.user_id no existen');
+      }
+    }
   };
 
   return (
@@ -99,7 +117,8 @@ const AddBook: React.FC = () => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
               id="price"
-              type="text"
+              type="number"
+              step="0.01"
               {...register('price')}
               placeholder="Introduce el precio"
             />
@@ -118,4 +137,3 @@ const AddBook: React.FC = () => {
 };
 
 export default AddBook;
-
