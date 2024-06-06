@@ -1,50 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
+import { Book } from '../models/Book'; // Importa el tipo Book
 
-type Book = {
-  book_id: number;
-  user_id: number;
-  title: string;
-  photo: string;
-  author: string;
-  type: string;
-  price: number;
-};
 
 const BooksPage: React.FC = () => {
   const [userBooks, setUserBooks] = useState<Book[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/books/1')
+    // Obtén el objeto userInfo del localStorage y conviértelo a un objeto JavaScript
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+
+    // Obtén el user_id del objeto userInfo y conviértelo a un número
+    const userId = Number(userInfo.user_id);
+
+    // Comprueba si el userId es un número válido
+    if (isNaN(userId) || userId === 0) {
+      console.error('Error: user_id no válido:', userId);
+      return;
+    }
+
+    axios.get(`http://localhost:3000/books/${userId}`) // Usa el user_id en la solicitud a la API
       .then(response => {
         const booksData = Array.isArray(response.data) ? response.data : [];
         console.log('Respuesta de la API:', booksData);
         setUserBooks(booksData);
       })
       .catch(error => {
-        console.error('Error al obtener libros del usuario 1:', error);
+        console.error(`Error al obtener libros del usuario ${userId}:`, error);
       });
   }, []);
+
+  const handleDelete = async (book_id: number) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/book/${book_id}`);
+
+      if (response.status !== 200) {
+        throw new Error('Error al eliminar el libro');
+      }
+
+      toast.success('Libro eliminado correctamente');
+      setUserBooks(userBooks.filter(book => book.book_id !== book_id));
+    } catch (error) {
+      console.error(error);
+      toast.error('Hubo un error al eliminar el libro');
+    }
+  };
 
   return (
     <div className="flex justify-center items-center flex-wrap">
       {userBooks.map(book => (
         <div key={book.book_id} className="m-4" style={{ width: '240px' }}>
-          <BookCard book={book} />
+          <BookCard book={book} handleDelete={handleDelete} />
         </div>
       ))}
     </div>
   );
 };
 
-const BookCard: React.FC<{ book: Book }> = ({ book }) => {
-  const handleDelete = (bookId: number) => {
-    // Implementar la lógica de eliminación aquí
-    console.log(`Eliminar libro con ID: ${bookId}`);
-    // Aquí deberías agregar la llamada a la API para eliminar el libro
-  };
-
+const BookCard: React.FC<{ book: Book, handleDelete: (book_id: number) => void }> = ({ book, handleDelete }) => {
   return (
     <div className="flex flex-col bg-white shadow-lg rounded-lg overflow-hidden" style={{ height: '500px' }}>
       <div className="h-80 flex justify-center items-center bg-cover bg-center " style={{ backgroundImage: `url(${book.photo})` }}>

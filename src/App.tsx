@@ -25,13 +25,13 @@ function App() {
         <div style={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Navigate replace to="/home" />} />
-            <Route path="/home" element={<Home />} />
             <Route path="/edit-book/:bookId" element={<EditBook />} />
             <Route path="*" element={<Pagina404 />} />
 
             <Route element={<PublicRoutes />}>
               <Route path="/login" element={<LogIn />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/home" element={<Home />} />
             </Route>
 
             <Route element={<PrivateRoutes />}>
