@@ -1,32 +1,34 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 type FormData = {
-  name: string;
+  email: string;
   password: string;
 };
 
 type FormErrors = {
-  name?: string;
+  email?: string;
   password?: string;
 };
 
 const LogIn: React.FC = () => {
   const { setUser } = useContext(UserContext);
-  const [formData, setFormData] = useState<FormData>({ name: '', password: '' });
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<FormData>({ email: '', password: '' });
   const [errors, setErrors] = useState<FormErrors>({});
 
   const validateForm = (): boolean => {
     const tempErrors: FormErrors = {};
     let formIsValid: boolean = true;
 
-    if (!formData.name) {
+    if (!formData.email) {
       formIsValid = false;
-      tempErrors.name = 'El nombre es requerido.';
-    } else if (formData.name.length < 3) {
+      tempErrors.email = 'El email es requerido.';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       formIsValid = false;
-      tempErrors.name = 'El nombre debe tener al menos 3 caracteres.';
+      tempErrors.email = 'Debe ser un email válido.';
     }
 
     if (!formData.password) {
@@ -44,14 +46,14 @@ const LogIn: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (validateForm()) {
-      axios.post('/api/login', {
-        name: formData.name,
-        password: formData.password
-      })
+      console.log (formData)
+      axios.post('http://localhost:3000/login', formData)
+      
       .then(response => {
         setUser(response.data.user);
+        console.log (response.data.user)
         localStorage.setItem('userInfo', JSON.stringify(response.data.user));
-        // Aquí podrías redirigir al usuario a su perfil o a la página principal
+        navigate('/BooksPage'); // Usando useNavigate para redirigir
       })
       .catch(error => {
         console.error('Error al iniciar sesión:', error);
@@ -70,19 +72,20 @@ const LogIn: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4 text-slate-800 hover:text-yellow-500">Logueate</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-              Nombre:
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+              Email:
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white hover:bg-white"
-              id="name"
-              type="text"
-              name="name"
-              placeholder="Tu nombre"
-              value={formData.name}
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Tu email"
+              value={formData.email}
               onChange={handleChange}
+              autoComplete="current-password" 
             />
-            {errors.name && <p className="text-red-500 text-xs italic">{errors.name}</p>}
+            {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">

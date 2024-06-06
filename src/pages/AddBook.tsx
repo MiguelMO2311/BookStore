@@ -11,8 +11,8 @@ import axios from 'axios';
 const bookSchema = z.object({
   title: z.string().min(1, 'El título es requerido.'),
   author: z.string().min(1, 'El autor es requerido.'),
-  type: z.string().min(1, 'El tipo es requerido.'),
   photo: z.string().url('Debe ser una URL válida.'),
+  type: z.string().min(1, 'El tipo es requerido.'),
   price: z.string().min(1, 'El precio es requerido.').regex(/^\d+(\.\d{1,2})?$/, 'Formato de precio no válido.'),
 });
 

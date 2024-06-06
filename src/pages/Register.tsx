@@ -2,11 +2,12 @@ import React, { useState, FormEvent, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 
+
 type FormData = {
   name: string;
   surname: string;
   email: string;
-  photo: string;
+  photo?: string;
   password: string;
   passwordRepeat: string;
 };
@@ -26,7 +27,7 @@ const Register: React.FC = () => {
     name: '',
     surname: '',
     email: '',
-    photo: '../assets/No_User.jpg', // Asegúrate de actualizar la ruta a la imagen por defecto
+    photo: '',
     password: '',
     passwordRepeat: ''
   });
@@ -71,12 +72,12 @@ const Register: React.FC = () => {
   
     if (isValid) {
       // Lógica para enviar los datos al servidor
-      axios.post('/api/register', formData)
+      console.log (formData)
+      axios.post('http://localhost:3000/register', formData)
         .then(response => {
-          // Actualiza el contexto del usuario y guarda en localStorage
+          // Actualiza el contexto del usuario
           setUser(response.data.user);
-          localStorage.setItem('userInfo', JSON.stringify(response.data.user));
-          // Redirige al usuario o maneja la respuesta como sea necesario
+        console.log (response.data.user)
         })
         .catch(error => {
           console.error('Error al enviar los datos:', error);

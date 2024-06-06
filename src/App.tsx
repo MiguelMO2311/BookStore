@@ -20,6 +20,7 @@ function App() {
   return (
     <UserProvider> {/* Envuelve tu aplicación con UserProvider */}
       <div className="flex flex-col min-h-svh min-w-full bg-slate-100">
+      <ToastContainer />
         <Header />
         <div style={{ flexGrow: 1 }}>
           <Routes>
@@ -42,8 +43,6 @@ function App() {
 
             </Route>
           </Routes>
-          
-          <ToastContainer />
         </div>
         <Footer />
       </div>

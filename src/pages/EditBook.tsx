@@ -1,58 +1,60 @@
 import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import axios from 'axios';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+// Esquema de validación para el formulario
 const bookSchema = z.object({
   book_id: z.number(),
   title: z.string().min(1, 'El título es requerido.'),
   author: z.string().min(1, 'El autor es requerido.'),
-  type: z.string().min(1, 'El tipo es requerido.'),
   photo: z.string().url('Debe ser una URL válida.'),
+  type: z.string().min(1, 'El tipo es requerido.'),
   price: z.number().min(0, 'El precio es requerido.'),
 });
 
+// Tipo de datos para el formulario
 type FormData = z.infer<typeof bookSchema>;
 
 const EditBook: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
+  const { book_id } = useParams<{ book_id: string }>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<FormData>({
     resolver: zodResolver(bookSchema),
   });
 
   useEffect(() => {
-    const bookId = location.state?.book_id;
-    if (bookId) {
-      // Aquí deberías reemplazar la URL con la ruta correcta de tu API
-      fetch(`/api/books/${bookId}`)
-        .then(response => response.json())
-        .then(data => {
-          reset(data); // Actualiza los valores del formulario con los datos del libro
+    if (book_id) {
+      axios.get(`http://localhost:3000/books/${book_id}`)
+        .then(response => {
+          const bookData = response.data;
+          Object.keys(bookData).forEach(key => {
+            setValue(key as keyof FormData, bookData[key]);
+          });
         })
         .catch(error => console.error('Error al cargar los datos del libro:', error));
     }
-  }, [location.state, reset]);
+  }, [book_id, setValue]);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    // Aquí deberías reemplazar la URL con la ruta correcta de tu API
-    const response = await fetch(`http://localhost:3000/books/${data.book_id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      console.log('Libro actualizado con éxito');
-      navigate('/'); // Redirige a la página de inicio después de la edición
-    } else {
-      console.error('Error al actualizar el libro');
-    }
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    const updatedData = {
+      ...data,
+      price: parseFloat(data.price.toString()),
+    };
+    axios.put(`http://localhost:3000/books/${updatedData.book_id}`, updatedData)
+      .then(() => {
+        console.log('Libro actualizado con éxito');
+        navigate('/');
+      })
+      .catch(error => console.error('Error al actualizar el libro:', error));
   };
-
   return (
     <div className="flex justify-center items-start pt-5 my-5 border-dashed h-1/3">
       <div className="w-2/3 h-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
@@ -118,16 +120,20 @@ const EditBook: React.FC = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
               id="price"
               type="text"
-              {...register('price')}
+              {...register('price', {
+                setValueAs: (value) => parseFloat(value) || 0, // Convierte el valor del input a un número flotante
+              })}
               placeholder="Introduce el precio"
             />
             {errors.price && <p className="text-red-500 text-xs italic">{errors.price.message}</p>}
             <button
-          className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right mt-5"
-          type="submit"
-        >
-          Editar Libro
-        </button>
+  className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right mt-5"
+  type="submit"
+  onClick={() => console.log('El botón fue clickeado')} // Agrega esto para probar
+>
+  Editar Libro
+</button>
+
           </div>
         </form>
       </div>
