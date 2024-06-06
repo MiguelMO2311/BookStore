@@ -17,6 +17,7 @@ function AnimatedTitle() {
       onMouseLeave={() => setHovered(false)}
       style={{
         cursor: "pointer", // Cambia el cursor al hacer hover
+        paddingLeft:"30px"
       }}
     >
       <animated.div

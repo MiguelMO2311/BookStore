@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
+
 type FormData = {
   email: string;
   password: string;
@@ -53,7 +54,7 @@ const LogIn: React.FC = () => {
         setUser(response.data.user);
         console.log (response.data.user)
         localStorage.setItem('userInfo', JSON.stringify(response.data.user));
-        navigate('/BooksPage'); // Usando useNavigate para redirigir
+        navigate('/booksPage'); // Usando useNavigate para redirigir
       })
       .catch(error => {
         console.error('Error al iniciar sesión:', error);

@@ -1,39 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-
-type FormData = {
-  name: string;
-  surname: string;
-  email: string;
-  photo: FileList;
-};
+import { User } from '../models/User';
+import { toast } from 'react-toastify';
 
 const Profile: React.FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<User>();
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+  const user_id = Number(userInfo.user_id || '0');
+  
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('surname', data.surname);
-      formData.append('email', data.email);
-      if (data.photo.length > 0) {
-        formData.append('photo', data.photo[0]);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/users/${user_id}`);
+        const { name, surname, email, photo } = response.data;
+        setValue('name', name);
+        setValue('surname', surname);
+        setValue('email', email);
+        setValue('photo', photo);
+      } catch (error) {
+        console.error('Error al cargar los datos del usuario:', error);
+        toast.error('Error al cargar los datos del usuario.');
       }
+    };
 
-      // Reemplaza 'tu-endpoint-de-actualización' con la URL de tu endpoint
-      const response = await axios.post('tu-endpoint-de-actualización', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+    fetchUserData();
+  }, [setValue, user_id]);
 
+  const onSubmit = async (data: User) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/users/${user_id}`, data);
       console.log('Perfil actualizado con éxito:', response.data);
-      // Aquí puedes manejar la navegación o la actualización de la UI según sea necesario
+      toast.success('Perfil actualizado con éxito!');
     } catch (error) {
       console.error('Error al actualizar el perfil:', error);
-      // Maneja el error en la UI si es necesario
+      toast.error('Error al actualizar el perfil.');
     }
   };
 
@@ -91,7 +93,7 @@ const Profile: React.FC = () => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
               id="photo"
-              type="file"
+              type="text"
               {...register('photo', { required: 'La foto es requerida.' })}
             />
             {errors.photo && <p className="text-red-500 text-xs italic">La foto es requerida.</p>}

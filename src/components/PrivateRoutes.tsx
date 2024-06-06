@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 
 function PrivateRoutes() {
- const user = { name: 'Ivan' };
+ const user = { email: ''};
 //  const user = null
  if (user) return <Outlet/>
 

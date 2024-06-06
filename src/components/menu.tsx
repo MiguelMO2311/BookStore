@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { AiOutlineUserAdd, AiOutlineUserDelete } from "react-icons/ai";
@@ -12,6 +12,11 @@ type MenuProps = {
 const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate(); // Hook para navegar
+    
+    useEffect(() => {
+        localStorage.removeItem('UserInfo');
+      }, []);
+      
 
     const logOut = () => {
         setUser(null); // Esto es válido si UserType incluye null
@@ -23,15 +28,15 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
         setIsOpen(false); // Cierra el menú
         navigate('/login'); // Navega a la página de LogIn
     };
-
+    
     return (
         <div className={className}>
             <nav className={`flex ${isOpen ? 'flex-col' : ''} justify-start items-center px-4 text-xl`}>
                 <div className={`flex ${isOpen ? 'flex-col' : ''} justify-start`}>
-                    {user ? (
+                    {user? (
                         <>
                             {/* Enlaces para usuario logueado */}
-                            {/* <NavLink className="ml-8 text-red-500 hover:text-red-400" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink> */}
+                            <NavLink className="ml-8 text-red-500 hover:text-red-400" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
                             <NavLink className="ml-8 text-blue-500 hover:text-blue-400" to="/booksPage" onClick={() => setIsOpen(false)}>Books</NavLink>
                             <NavLink className="ml-8 text-gray-800 hover:text-gray-500" to="/profile" onClick={() => setIsOpen(false)}>Profile</NavLink>
                             <NavLink className="ml-8 text-green-600 hover:text-green-400" to="/addBook" onClick={() => setIsOpen(false)}>AddBook</NavLink>

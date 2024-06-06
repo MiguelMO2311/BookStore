@@ -41,7 +41,7 @@ function Home() {
           ¡Book Store!
         </h1>
       )}
-      {/* Renderiza las palabras "book" generadas dentro de los límites de Home y por debajo del encabezado */}
+      {/* Renderiza los iconos "book" generados dentro de los límites de Home y por debajo del encabezado */}
       {generateBooks()}
     </div>
   );

@@ -25,7 +25,8 @@ function App() {
         <div style={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Navigate replace to="/home" />} />
-            <Route path="/edit-book/:bookId" element={<EditBook />} />
+            <Route path="/edit-book/:book_id" Component={EditBook} />
+
             <Route path="*" element={<Pagina404 />} />
 
             <Route element={<PublicRoutes />}>
@@ -35,7 +36,7 @@ function App() {
             </Route>
 
             <Route element={<PrivateRoutes />}>
-              <Route path="/BooksPage" element={<BooksPage />} />
+              <Route path="/booksPage" element={<BooksPage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/addBook" element={<AddBook />} />
               <Route path="/editBook" element={<EditBook />} />
