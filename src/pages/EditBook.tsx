@@ -5,6 +5,7 @@ import axios from 'axios';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Esquema de validación para el formulario
 const bookSchema = z.object({

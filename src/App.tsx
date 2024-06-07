@@ -33,7 +33,7 @@ function App() {
             </Route>
 
             <Route element={<PrivateRoutes />}>
-              <Route path="/booksPage" element={<BooksPage />} />
+              <Route path="/BooksPage" element={<BooksPage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/addBook" element={<AddBook />} />
               <Route path="/editBook" element={<EditBook />} />

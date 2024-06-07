@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de que este CSS también esté importado en tu componente principal
+import 'react-toastify/dist/ReactToastify.css';
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
-import { Book } from '../models/Book'; // Importa el tipo Book
+import { Book } from '../models/Book';
 
 const BooksPage: React.FC = () => {
   const [userBooks, setUserBooks] = useState<Book[]>([]);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-    const userId = Number(userInfo.user_id);
-    if (isNaN(userId) || userId === 0) {
-      console.error('Error: user_id no válido:', userId);
+    if (userInfo.user_id === undefined || isNaN(Number(userInfo.user_id))) {
+      console.error('Error: user_id no válido:', userInfo.user_id);
       return;
     }
+    const userId = Number(userInfo.user_id);
 
     axios.get(`http://localhost:3000/books/${userId}`)
       .then(response => {
@@ -45,7 +45,7 @@ const BooksPage: React.FC = () => {
   
   return (
     <div className="flex justify-center items-center flex-wrap">
-      <ToastContainer /> {/* Asegúrate de que este componente también esté en tu componente principal */}
+      <ToastContainer />
       {userBooks.map(book => (
         <div key={book.book_id} className="m-4" style={{ width: '240px' }}>
           <BookCard book={book} handleDelete={handleDelete} />

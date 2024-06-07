@@ -1,6 +1,9 @@
 import React, { useState, FormEvent, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 // 
 
 type FormData = {
@@ -22,6 +25,7 @@ type FormErrors = {
 };
 
 const Register: React.FC = () => {
+  const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -78,9 +82,12 @@ const Register: React.FC = () => {
           // Actualiza el contexto del usuario
           setUser(response.data.user);
         console.log (response.data.user)
+        toast.success('Usuario registrado con éxito!');
+        navigate('/BooksPage');
         })
         .catch(error => {
           console.error('Error al enviar los datos:', error);
+          toast.error('Error al registrarse usuario.');
         });
     }
   };

@@ -54,7 +54,7 @@ const LogIn: React.FC = () => {
         setUser(response.data.user);
         console.log (response.data.user)
         localStorage.setItem('userInfo', JSON.stringify(response.data.user));
-        navigate('/booksPage'); // Usando useNavigate para redirigir
+        navigate('/BooksPage'); // Usando useNavigate para redirigir
       })
       .catch(error => {
         console.error('Error al iniciar sesión:', error);
