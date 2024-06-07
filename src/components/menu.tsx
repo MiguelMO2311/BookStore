@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-import { AiOutlineUserAdd, AiOutlineUserDelete } from "react-icons/ai";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
 type MenuProps = {
     className?: string;
@@ -40,10 +40,9 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
                             <NavLink className="ml-8 text-blue-500 hover:text-blue-400" to="/booksPage" onClick={() => setIsOpen(false)}>Books</NavLink>
                             <NavLink className="ml-8 text-gray-800 hover:text-gray-500" to="/profile" onClick={() => setIsOpen(false)}>Profile</NavLink>
                             <NavLink className="ml-8 text-green-600 hover:text-green-400" to="/addBook" onClick={() => setIsOpen(false)}>AddBook</NavLink>
-                            
                             <button onClick={logOut} className="ml-8 flex items-center text-yellow-400 hover:bg-yellow-400
                              hover:text-black focus:outline-none border-2 border-green-700 rounded-lg p-1 transition-colors
-                             duration-200"><AiOutlineUserDelete size={20} color="red" /><span className="text-xs ml-1">Log Out</span>
+                             duration-200"><img src={user.photo} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%' }} /><span className="text-xs ml-1">Log Out</span>
                             </button>
                         </>
                     ) : (

@@ -15,12 +15,9 @@ import { UserProvider } from './context/UserContext';
 import Pagina404 from './pages/ErrorPage404';
 
 function App() {
-  
-  
   return (
     <UserProvider> {/* Envuelve tu aplicación con UserProvider */}
       <div className="flex flex-col min-h-svh min-w-full bg-slate-100">
-      <ToastContainer />
         <Header />
         <div style={{ flexGrow: 1 }}>
           <Routes>
@@ -40,10 +37,9 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/addBook" element={<AddBook />} />
               <Route path="/editBook" element={<EditBook />} />
-             
-
             </Route>
           </Routes>
+          <ToastContainer />
         </div>
         <Footer />
       </div>

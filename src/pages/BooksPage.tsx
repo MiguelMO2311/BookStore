@@ -35,19 +35,19 @@ const BooksPage: React.FC = () => {
   const handleDelete = async (book_id: number) => {
     try {
       const response = await axios.delete(`http://localhost:3000/book/${book_id}`);
-
+  
       if (response.status !== 200) {
         throw new Error('Error al eliminar el libro');
       }
-
+  
+      setUserBooks(prevBooks => prevBooks.filter(book => book.book_id !== book_id));
       toast.success('Libro eliminado correctamente');
-      setUserBooks(userBooks.filter(book => book.book_id !== book_id));
     } catch (error) {
       console.error(error);
       toast.error('Hubo un error al eliminar el libro');
     }
   };
-
+  
   return (
     <div className="flex justify-center items-center flex-wrap">
       {userBooks.map(book => (
