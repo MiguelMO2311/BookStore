@@ -36,8 +36,7 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
                     {user? (
                         <>
                             {/* Enlaces para usuario logueado */}
-                            <NavLink className="ml-8 text-red-500 hover:text-red-400" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
-                            <NavLink className="ml-8 text-blue-500 hover:text-blue-400" to="/booksPage" onClick={() => setIsOpen(false)}>Books</NavLink>
+                            <NavLink className="ml-8 text-red-500 hover:text-red-400" to="/booksPage" onClick={() => setIsOpen(false)}>Books</NavLink>
                             <NavLink className="ml-8 text-gray-800 hover:text-gray-500" to="/profile" onClick={() => setIsOpen(false)}>Profile</NavLink>
                             <NavLink className="ml-8 text-green-600 hover:text-green-400" to="/addBook" onClick={() => setIsOpen(false)}>AddBook</NavLink>
                             <button onClick={logOut} className="ml-8 flex items-center text-yellow-400 hover:bg-yellow-400

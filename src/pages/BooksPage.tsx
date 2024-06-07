@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de que este CSS también esté importado en tu componente principal
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
 import { Book } from '../models/Book'; // Importa el tipo Book
-
 
 const BooksPage: React.FC = () => {
   const [userBooks, setUserBooks] = useState<Book[]>([]);
 
   useEffect(() => {
-    // Obtén el objeto userInfo del localStorage y conviértelo a un objeto JavaScript
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-
-    // Obtén el user_id del objeto userInfo y conviértelo a un número
     const userId = Number(userInfo.user_id);
-
-    // Comprueba si el userId es un número válido
     if (isNaN(userId) || userId === 0) {
       console.error('Error: user_id no válido:', userId);
       return;
     }
 
-    axios.get(`http://localhost:3000/books/${userId}`) // Usa el user_id en la solicitud a la API
+    axios.get(`http://localhost:3000/books/${userId}`)
       .then(response => {
         const booksData = Array.isArray(response.data) ? response.data : [];
         console.log('Respuesta de la API:', booksData);
@@ -50,6 +45,7 @@ const BooksPage: React.FC = () => {
   
   return (
     <div className="flex justify-center items-center flex-wrap">
+      <ToastContainer /> {/* Asegúrate de que este componente también esté en tu componente principal */}
       {userBooks.map(book => (
         <div key={book.book_id} className="m-4" style={{ width: '240px' }}>
           <BookCard book={book} handleDelete={handleDelete} />
@@ -63,7 +59,6 @@ const BookCard: React.FC<{ book: Book, handleDelete: (book_id: number) => void }
   return (
     <div className="flex flex-col bg-white shadow-lg rounded-lg overflow-hidden" style={{ height: '500px' }}>
       <div className="h-80 flex justify-center items-center bg-cover bg-center " style={{ backgroundImage: `url(${book.photo})` }}>
-        {/* La imagen del libro se ajustará al div contenedor */}
       </div>
       <div className="p-4 flex-grow">
         <h2 className="text-xl text-blue-700 font-bold">{book.title}</h2>

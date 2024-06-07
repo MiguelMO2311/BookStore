@@ -9,7 +9,7 @@ function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setShowTitle(show => !show);
-    }, 2000); // Cambia el título cada 3 segundos
+    }, 1000); // Cambia el título cada 3 segundos
     return () => clearInterval(interval);
   }, []);
 
