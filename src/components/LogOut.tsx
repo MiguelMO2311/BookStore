@@ -1,7 +1,6 @@
-import { AiOutlineUserDelete } from "react-icons/ai";
-import { AiOutlineUserAdd } from "react-icons/ai";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { User } from '../models/User'; // Importa el tipo User
 
 type MenuProps = {
     className?: string;
@@ -10,11 +9,23 @@ type MenuProps = {
 };
 
 const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
-    const [user, setUser] = useState<unknown | null>(null);
-
-    const toggleUser = () => {
-        setUser(user ? null : {}); // Cambia el estado del usuario cuando se hace clic en el botón
+    const emptyUser: User = {
+        user_id: 0,
+        name: '',
+        surname: '',
+        email: '',
+        password: '',
+        photo: '',
     };
+
+    const [user, setUser] = useState<User | null>(emptyUser);
+
+    useEffect(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            setUser(JSON.parse(userInfo));
+        }
+    }, []);
 
     return (
         <div className={className}>
@@ -37,17 +48,22 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
                         </>
                     )}
                 </div>
-                <button onClick={toggleUser} style={{ fontSize: '8px', margin: '5%', width: '40px' }}>
-                    {user ? <AiOutlineUserDelete size={30} color="red" /> : <AiOutlineUserAdd size={30} color="white" />}
-                    <span style={{ color: user ? 'red' : 'white' }}>
-                        {user ? ' DEL User' : ' ADD User'}
-                    </span>
+                <button style={{ fontSize: '8px', margin: '5%', width: '40px' }}>
+                    {user && user.photo ? (
+                        <>
+                            <img src={user.photo} alt="User" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />
+                            <span style={{ color: 'red' }}>DEL User</span>
+                        </>
+                    ) : (
+                        <>
+                            <span style={{ color: 'white' }}>ADD User</span>
+                        </>
+                    )}
                 </button>
-
             </nav>
         </div>
     );
 };
 
-
 export default Menu;
+
