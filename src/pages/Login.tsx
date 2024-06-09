@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 type FormData = {
@@ -53,9 +54,13 @@ const LogIn: React.FC = () => {
       .then(response => {
         setUser(response.data.user);
         console.log (response.data.user)
-        localStorage.setItem('userInfo', JSON.stringify(response.data.user));
-        navigate('/BooksPage'); // Usando useNavigate para redirigir
-      })
+        localStorage.setItem('userInfo', JSON.stringify(response.data.user))
+        toast.success('Usuario Logueado con éxito!', { autoClose: 2000 });
+          setTimeout(() => {
+            navigate('/BooksPage');
+          }, 3000);
+        })
+
       .catch(error => {
         console.error('Error al iniciar sesión:', error);
       });

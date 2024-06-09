@@ -82,27 +82,30 @@ const Register: React.FC = () => {
           // Actualiza el contexto del usuario
           setUser(response.data.user);
         console.log (response.data.user)
-        toast.success('Usuario registrado con éxito!');
-        navigate('/BooksPage');
+        alert('Usuario registrado con éxito!, ... ya puede Loguearse!');
+        navigate('/');
         })
         .catch(error => {
-          console.error('Error al enviar los datos:', error);
-          toast.error('Error al registrarse usuario.');
+          console.error(error);
+          toast.error('Ohh, Este Usuario ya existe!', { autoClose: 4000 });
         });
+        
+      } else {
+        console.error(errors);
+      }
     }
-  };
-  
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
-
+  
+ 
   return (
-    <div className="flex justify-center items-start pt-10 border-dashed ">
-      <div className="w-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
-        <h1 className="text-2xl font-bold mb-3 text-slate-800 hover:text-indigo-300">Regístrate</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('/imgs/img_fondo_register.jpg')", backgroundSize:"70%", maxHeight:"550px"}}>
+    <div className="flex justify-center items-start border-dashed">
+      <div className="w-2/3 shadow-md rounded px-8 pt-6 pb-8 hover:bg-white">
+        <h1 className="text-2xl font-bold mb-2 text-green-500 hover:text-indigo-300">Regístrate</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
               Nombre:
@@ -178,12 +181,13 @@ const Register: React.FC = () => {
             />
             {formSubmitted && errors.passwordRepeat && <p className="text-red-500 text-xs italic">{errors.passwordRepeat}</p>}
           </div>
-          <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-2">
             Registrarse
           </button>
         </form>
       </div>
     </div>
+  </div>
   );
 };
 

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { User } from '../models/User';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+
 
 type ChangePasswordForm = {
   oldPassword: string;
@@ -37,37 +37,41 @@ const Profile: React.FC = () => {
     fetchUserData();
   }, [setValue, user_id]);
 
-  const onSubmit = async (data: User) => {
-    try {
-      const response = await axios.put(`http://localhost:3000/users/${user_id}`, data);
-      console.log('Perfil actualizado con éxito:', response.data);
-      toast.success('Perfil actualizado con éxito!');
-      navigate('/BooksPage');
-    } catch (error) {
-      console.error('Error al actualizar el perfil:', error);
-      toast.error('Error al actualizar el perfil.');
-     
-    }
+  const onSubmit = (data: User) => {
+    axios.put(`http://localhost:3000/users/${user_id}`, data)
+      .then(response => {
+        console.log('Perfil actualizado con éxito:', response.data);
+        alert('Usuario actualizado con éxito');
+        setTimeout(() => {
+          navigate('/BooksPage');
+        }, 1000);
+      })
+      .catch(error => {
+        console.error('Error al actualizar el perfil:', error);
+        alert('Error al actualizar el perfil.');
+      });
   };
+  
 
   const onSubmitPassword = async (data: ChangePasswordForm) => {
     try {
       if (data.newPassword !== data.confirmPassword) {
-        toast.error('Las contraseñas no coinciden.');
+        alert('Las contraseñas no coinciden.');
         return;
       }
-
-      // Aquí debes hacer la petición a la base de datos para cambiar la contraseña
-      // Asegúrate de enviar tanto la contraseña antigua como la nueva
-      // Si la contraseña antigua es incorrecta, muestra un mensaje de error
-      // Si la contraseña se cambia con éxito, muestra un mensaje de éxito
-
-      toast.success('Contraseña cambiada con éxito!');
+  
+      const response = await axios.put(`http://localhost:3000/users/${user_id}/password`, data);
+      console.log('Contraseña cambiada con éxito:', response.data);
+      alert('Cambiada contraseña con exito');
+      setTimeout(() => {
+        navigate('/BooksPage');
+      }, 1000);
     } catch (error) {
       console.error('Error al cambiar la contraseña:', error);
-      toast.error('Error al cambiar la contraseña.');
+      alert('Error al cambiar la contraseña.');
     }
   };
+  
 
   return (
     <div className="flex justify-center items-start pt-10 border-dashed ">
@@ -75,9 +79,6 @@ const Profile: React.FC = () => {
         <div className="w-1/5 pt-12">
           <img src={userInfo.photo} alt="User" style={{width: '90%', height: '84%', borderRadius: '5%'}} />
           <div className="flex justify-center mt-5">
-            <button className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4  mr-6 rounded focus:outline-none focus:shadow-outline">
-              Cambiar Foto
-            </button>
           </div>
         </div>
         <div className="w-3/5 ml-2 pr-5">
@@ -146,49 +147,49 @@ const Profile: React.FC = () => {
         </div>
         <div className="w-1/5 ml-4">
           <h2 className="text-xl font-bold mb-4 text-slate-800 hover:text-slate-400">Cambiar contraseña</h2>
-          <form onSubmit={handleSubmitPassword(onSubmitPassword)} className="">
-            <div className="">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="oldPassword">
-                Contraseña antigua:
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white mb-6"
-                id="oldPassword"
-                type="password"
-                {...registerPassword('oldPassword', { required: 'La contraseña antigua es requerida.' })}
-              />
-              {passwordErrors.oldPassword && <p className="text-red-500 text-xs italic">{passwordErrors.oldPassword.message}</p>}
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="newPassword">
-                Contraseña nueva:
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white mb-2"
-                id="newPassword"
-                type="password"
-                {...registerPassword('newPassword', { required: 'La contraseña nueva es requerida.' })}
-              />
-              {passwordErrors.newPassword && <p className="text-red-500 text-xs italic">{passwordErrors.newPassword.message}</p>}
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
-                Confirmar contraseña:
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white mb-[88px]"
-                id="confirmPassword"
-                type="password"
-                {...registerPassword('confirmPassword', { required: 'La confirmación de la contraseña es requerida.' })}
-              />
-              {passwordErrors.confirmPassword && <p className="text-red-500 text-xs italic">{passwordErrors.confirmPassword.message}</p>}
-            </div>
-            <div className="flex justify-center mt-6">
-              <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Cambiar Contraseña
-              </button>
-            </div>
-          </form>
+          <form onSubmit={handleSubmitPassword(onSubmitPassword)} className="space-y-6">
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="oldPassword">
+      Contraseña actual:
+    </label>
+    <input
+      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+      id="oldPassword"
+      type="password"
+      {...registerPassword('oldPassword', { required: 'La contraseña actual es requerida.' })}
+    />
+    {passwordErrors.oldPassword && <p className="text-red-500 text-xs italic">{passwordErrors.oldPassword.message}</p>}
+  </div>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="newPassword">
+      Nueva contraseña:
+    </label>
+    <input
+      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+      id="newPassword"
+      type="password"
+      {...registerPassword('newPassword', { required: 'La nueva contraseña es requerida.' })}
+    />
+    {passwordErrors.newPassword && <p className="text-red-500 text-xs italic">{passwordErrors.newPassword.message}</p>}
+  </div>
+  <div className="mb-4">
+    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
+      Confirmar nueva contraseña:
+    </label>
+    <input
+      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+      id="confirmPassword"
+      type="password"
+      {...registerPassword('confirmPassword', { required: 'Confirmar la nueva contraseña es requerido.' })}
+    />
+    {passwordErrors.confirmPassword && <p className="text-red-500 text-xs italic">{passwordErrors.confirmPassword.message}</p>}
+  </div>
+  <div className="flex items-center justify-between">
+    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+      Cambiar contraseña
+    </button>
+  </div>
+</form>
         </div>
       </div>
     </div>

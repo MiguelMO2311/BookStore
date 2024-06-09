@@ -41,20 +41,21 @@ const AddBook: React.FC = () => {
         const dataWithUserId = { ...data, user_id: Number(userInfo.user_id), price: priceAsNumber };
         console.log(dataWithUserId)
         axios.post('http://localhost:3000/add', dataWithUserId)
-        .then(response => {
-          // Aquí puedes manejar la respuesta del servidor
-          console.log(response.data);
-          toast.success('¡Libro añadido con éxito!');
-          navigate('/booksPage');
+        .then(() => {
+          toast.success('Libro añadido con éxito', { autoClose: 2000 });
+          setTimeout(() => {
+            navigate('/BooksPage');
+          }, 3000);
         })
         .catch(error => {
-          toast.error('Error al añadir el libro: ' + error.message);
+          console.error(error);
+          toast.error('Ohh, Este libro ya existe!', { autoClose: 4000 });
         });
+        
       } else {
-        console.error('userInfo o userInfo.user_id no existen');
+        console.error(errors);
       }
-    }
-  };
+    }  };
 
   return (
     <div className="flex justify-center items-start pt-5 my-5 border-dashed h-1/3">
@@ -139,8 +140,8 @@ const AddBook: React.FC = () => {
               </button>
             </form>
           </div>
-          <div className="w-1/4 flex flex-col items-center justify-between mt-8 ml-6">
-            <img src={bookImage} alt="Book" style={{width: '180px', height: '360px', borderRadius: '10%'}} />
+          <div className="w-1/4 flex flex-col items-center justify-between mt-7 ml-6">
+            <img src={bookImage} alt="Book" style={{width: '180px', height: '350px', borderRadius: '3%'}} />
           </div>
         </div>
       </div>

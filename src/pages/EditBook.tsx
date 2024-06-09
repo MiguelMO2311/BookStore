@@ -66,8 +66,10 @@ const EditBook: React.FC = () => {
     await axios.put(`http://localhost:3000/books/book/${book_id}`, updatedData)
     .then(() => {
       console.log('Libro actualizado con éxito');
-      toast.success('Libro editado actualizado'); 
-      navigate('/BooksPage');
+      toast.success('Libro editado actualizado', { autoClose: 2000 });
+      setTimeout(() => {
+        navigate('/BooksPage');
+      }, 3000);
     })
     .catch(error => {
       console.error('Error al actualizar el libro:', error);
