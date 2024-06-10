@@ -74,8 +74,9 @@ const Profile: React.FC = () => {
   
 
   return (
+    <div className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('/imgs/img_fondo_profile.jpg')", backgroundSize:'cover', maxHeight:"550px"}}>
     <div className="flex justify-center items-start pt-10 border-dashed ">
-      <div className="w-5/6 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white flex">
+      <div className="w-5/6 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-green-800 hover:bg-opacity-40 flex">
         <div className="w-1/5 pt-12">
           <img src={userInfo.photo} alt="User" style={{width: '90%', height: '84%', borderRadius: '5%'}} />
           <div className="flex justify-center mt-5">
@@ -139,13 +140,13 @@ const Profile: React.FC = () => {
               {errors.photo && <p className="text-red-500 text-xs italic">La foto es requerida.</p>}
             </div>
             <div className="flex justify-center mt-6">
-              <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              <button type="submit" className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Actualizar Perfil
               </button>
             </div>
           </form>
         </div>
-        <div className="w-1/5 ml-4">
+        <div className="w-1/5 ml-4  hover:bg-green-800 hover:bg-opacity-50 ">
           <h2 className="text-xl font-bold mb-4 text-slate-800 hover:text-slate-400">Cambiar contraseña</h2>
           <form onSubmit={handleSubmitPassword(onSubmitPassword)} className="space-y-6">
   <div className="mb-4">
@@ -185,7 +186,7 @@ const Profile: React.FC = () => {
     {passwordErrors.confirmPassword && <p className="text-red-500 text-xs italic">{passwordErrors.confirmPassword.message}</p>}
   </div>
   <div className="flex items-center justify-between">
-    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+    <button className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 ml-7 rounded focus:outline-none focus:shadow-outline mt-[88px]" type="submit" >
       Cambiar contraseña
     </button>
   </div>
@@ -193,6 +194,7 @@ const Profile: React.FC = () => {
         </div>
       </div>
     </div>
+</div>
   );
 };
   

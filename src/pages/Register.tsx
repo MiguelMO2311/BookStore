@@ -102,9 +102,9 @@ const Register: React.FC = () => {
  
   return (
     <div className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('/imgs/img_fondo_register.jpg')", backgroundSize:"70%", maxHeight:"550px"}}>
-    <div className="flex justify-center items-start border-dashed">
-      <div className="w-2/3 shadow-md rounded px-8 pt-6 pb-8 hover:bg-white">
-        <h1 className="text-2xl font-bold mb-2 text-green-500 hover:text-indigo-300">Regístrate</h1>
+    <div className="flex justify-center items-start border-dashed pt-2">
+      <div className="w-2/3 shadow-md rounded px-8 py-4 hover:bg-green-800 hover:bg-opacity-50 ">
+        <h1 className="text-2xl font-bold mb-2 text-green-500 hover:text-green-300">Regístrate</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
@@ -181,7 +181,7 @@ const Register: React.FC = () => {
             />
             {formSubmitted && errors.passwordRepeat && <p className="text-red-500 text-xs italic">{errors.passwordRepeat}</p>}
           </div>
-          <button type="submit" className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-2">
+          <button type="submit" className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-2">
             Registrarse
           </button>
         </form>

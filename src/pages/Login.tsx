@@ -73,8 +73,9 @@ const LogIn: React.FC = () => {
   };
 
   return (
+    <div className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('/imgs/img_fondo_login.jpg')", backgroundSize:'75%', maxHeight:"550px"}}>
     <div className="flex justify-center items-center pt-24 border-dashed">
-      <div className="w-1/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
+      <div className="w-1/3 shadow-md rounded px-8 pt-6 pb-8 mb-4  hover:bg-green-800 hover:bg-opacity-50">
         <h1 className="text-2xl font-bold mb-4 text-slate-800 hover:text-yellow-500">Logueate</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="mb-4">
@@ -82,7 +83,7 @@ const LogIn: React.FC = () => {
               Email:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white hover:bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-green-100 hover:bg-white"
               id="email"
               type="email"
               name="email"
@@ -98,7 +99,7 @@ const LogIn: React.FC = () => {
               Contraseña:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-white hover:bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-green-100 hover:bg-white"
               id="password"
               type="password"
               name="password"
@@ -109,13 +110,14 @@ const LogIn: React.FC = () => {
             {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
           </div>
           <div className="flex items-center justify-between">
-            <button className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-[45%]" type="submit">
+            <button className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-[40%]" type="submit">
               Login
             </button>
           </div>
         </form>
       </div>
     </div>
+  </div>
   );
 };
 

@@ -35,7 +35,7 @@ function Home() {
   };
 
   return (
-    <div ref={homeRef} className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('https://img.freepik.com/foto-gratis/coleccion-biblioteca-antigua-naturaleza-muerta-sabiduria-generada-ia_24911-72372.jpg?size=626&ext=jpg')", backgroundSize:"cover", maxHeight:"550px"}}>
+    <div ref={homeRef} className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('https://img.freepik.com/foto-gratis/coleccion-biblioteca-antigua-naturaleza-muerta-sabiduria-generada-ia_24911-72372.jpg?size=626&ext=jpg')", backgroundSize:"95%", maxHeight:"550px"}}>
       {showTitle && (
         <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl opacity-0 animate-fadeInOut size-max">
           ¡Book Store!

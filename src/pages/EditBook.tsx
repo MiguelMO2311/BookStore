@@ -78,8 +78,9 @@ const EditBook: React.FC = () => {
 
   };
   return (
+    <div className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('/imgs/img_fondo_addBook.jpg')", backgroundSize:'cover', maxHeight:"550px"}}>
     <div className="flex justify-center items-start pt-5 my-5 border-dashed h-1/3">
-      <div className="w-2/3 h-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
+      <div className="w-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4  hover:bg-green-800 hover:bg-opacity-50 ">
         <h1 className="text-2xl font-bold m-1 text-slate-800 hover:text-lime-200">Editar Libro</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
           <div className="mb-2">
@@ -150,7 +151,7 @@ const EditBook: React.FC = () => {
             {errors.price && <p className="text-red-500 text-xs italic">{errors.price.message}</p>}
             
             <button
-              className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right mt-5"
+              className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right mt-5"
               type="submit"
             >
               Editar Libro
@@ -159,6 +160,7 @@ const EditBook: React.FC = () => {
         </form>
       </div>
     </div>
+  </div>
   );
 };
 

@@ -58,19 +58,20 @@ const AddBook: React.FC = () => {
     }  };
 
   return (
-    <div className="flex justify-center items-start pt-5 my-5 border-dashed h-1/3">
+    <div className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('/imgs/img_fondo_addBook.jpg')", backgroundSize:'cover', maxHeight:"550px"}}>
+    <div className="flex justify-center items-start py-2 border-dashed h-1/3">
       <ToastContainer />
-      <div className="w-2/3 h-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-white">
+      <div className="w-2/3 shadow-md rounded px-8 pt-6 pb-8 mb-4 hover:bg-green-800 hover:bg-opacity-40">
         <h1 className="text-2xl font-bold m-1 text-slate-800 hover:text-green-400">Añadir Libro</h1>
         <div className="flex justify-between">
           <div className="w-3/4">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-1">
               <div className="mb-2">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
                   Título:
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+                  className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
                   id="title"
                   type="text"
                   {...register('title')}
@@ -83,7 +84,7 @@ const AddBook: React.FC = () => {
                   Autor:
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+                  className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
                   id="author"
                   type="text"
                   {...register('author')}
@@ -96,7 +97,7 @@ const AddBook: React.FC = () => {
                   Tipo:
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+                  className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
                   id="type"
                   type="text"
                   {...register('type')}
@@ -109,7 +110,7 @@ const AddBook: React.FC = () => {
                   URL de la Foto:
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+                  className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
                   id="photo"
                   type="text"
                   {...register('photo')}
@@ -133,7 +134,7 @@ const AddBook: React.FC = () => {
                 {errors.price && <p className="text-red-500 text-xs italic">{errors.price.message}</p>}
               </div>
               <button
-                className="bg-slate-500 hover:bg-slate-800 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline float-right mt-5"
+                className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline float-right mt-5"
                 type="submit"
               >
                 Añadir Libro
@@ -141,11 +142,13 @@ const AddBook: React.FC = () => {
             </form>
           </div>
           <div className="w-1/4 flex flex-col items-center justify-between mt-7 ml-6">
-            <img src={bookImage} alt="Book" style={{width: '180px', height: '350px', borderRadius: '3%'}} />
+            <img src={bookImage} alt="Book" style={{width: '180px', height: '330px', borderRadius: '3%'}} />
           </div>
         </div>
       </div>
     </div>
+    </div>
+
   );
 };
 
