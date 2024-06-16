@@ -87,7 +87,7 @@ const Register: React.FC = () => {
         })
         .catch(error => {
           console.error(error);
-          toast.error('Ohh, Este Usuario ya existe!', { autoClose: 4000 });
+          toast.error('Ohh, Este Usuario ya existe!', {position: "top-center", autoClose: 4000});
         });
         
       } else {
@@ -107,11 +107,11 @@ const Register: React.FC = () => {
         <h1 className="text-2xl font-bold mb-2 text-green-500 hover:text-green-300">Regístrate</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="name">
               Nombre:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none bg-green-100 hover:bg-white"
               id="name"
               type="text"
               name="name"
@@ -122,11 +122,11 @@ const Register: React.FC = () => {
             {formSubmitted && errors.name && <p className="text-red-500 text-xs italic">{errors.name}</p>}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="surname">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="surname">
               Apellido:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none bg-green-100 hover:bg-white"
               id="surname"
               type="text"
               name="surname"
@@ -137,11 +137,11 @@ const Register: React.FC = () => {
             {formSubmitted && errors.surname && <p className="text-red-500 text-xs italic">{errors.surname}</p>}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="email">
               Email:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none bg-green-100 hover:bg-white"
               id="email"
               type="email"
               name="email"
@@ -152,11 +152,11 @@ const Register: React.FC = () => {
             {formSubmitted && errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="password">
               Contraseña:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none bg-green-100 hover:bg-white"
               id="password"
               type="password"
               name="password"
@@ -167,11 +167,11 @@ const Register: React.FC = () => {
             {formSubmitted && errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="passwordRepeat">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="passwordRepeat">
               Repetir Contraseña:
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-green-100 hover:bg-white"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none bg-green-100 hover:bg-white"
               id="passwordRepeat"
               type="password"
               name="passwordRepeat"

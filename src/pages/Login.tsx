@@ -55,15 +55,17 @@ const LogIn: React.FC = () => {
         setUser(response.data.user);
         console.log (response.data.user)
         localStorage.setItem('userInfo', JSON.stringify(response.data.user))
-        toast.success('Usuario Logueado con éxito!', { autoClose: 2000 });
+        toast.success('Usuario Logueado con éxito!', {position: "top-center", autoClose: 2000 });
           setTimeout(() => {
             navigate('/BooksPage');
           }, 3000);
         })
-
-      .catch(error => {
-        console.error('Error al iniciar sesión:', error);
-      });
+        .catch(error => {
+          console.error('Error al iniciar sesión:', error);
+          toast.error(`Error al iniciar sesión: ${error.response.data.message}`, {position: "top-center",  autoClose: 2000 });
+          
+        });
+        
     }
   };
 
@@ -79,7 +81,7 @@ const LogIn: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4 text-slate-800 hover:text-yellow-500">Logueate</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="email">
               Email:
             </label>
             <input
@@ -95,7 +97,7 @@ const LogIn: React.FC = () => {
             {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label className="block text-black text-sm font-bold mb-2" htmlFor="password">
               Contraseña:
             </label>
             <input

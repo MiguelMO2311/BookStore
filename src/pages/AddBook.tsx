@@ -42,14 +42,14 @@ const AddBook: React.FC = () => {
         console.log(dataWithUserId)
         axios.post('http://localhost:3000/add', dataWithUserId)
         .then(() => {
-          toast.success('Libro añadido con éxito', { autoClose: 2000 });
+          toast.success('Libro añadido con éxito', {position: "top-center", autoClose: 2000}) ;
           setTimeout(() => {
             navigate('/BooksPage');
-          }, 3000);
+          }, 2000);
         })
         .catch(error => {
           console.error(error);
-          toast.error('Ohh, Este libro ya existe!', { autoClose: 4000 });
+          toast.error('Ohh, Este libro ya existe!',  {position: "top-center", autoClose: 3000});
         });
         
       } else {

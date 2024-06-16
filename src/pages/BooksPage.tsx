@@ -36,10 +36,10 @@ const BooksPage: React.FC = () => {
       }
   
       setUserBooks(prevBooks => prevBooks.filter(book => book.book_id !== book_id));
-      toast.success('Libro eliminado correctamente', {autoClose: 2000});
+      toast.success('Libro eliminado correctamente', {position: "top-center", autoClose: 2000});
     } catch (error) {
       console.error(error);
-      toast.error('Hubo un error al eliminar el libro');
+      toast.error('Hubo un error al eliminar el libro', {position: "top-center", autoClose: 2000});
     }
   };
   
