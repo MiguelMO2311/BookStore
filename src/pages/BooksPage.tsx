@@ -49,7 +49,7 @@ const BooksPage: React.FC = () => {
            style={{ backgroundImage: `url('/imgs/img_fondo_addBook.jpg')`, backgroundSize: 'cover' }}>
         <ToastContainer />
         {userBooks.map(book => (
-          <div key={book.book_id} className="m-4" style={{ width: '240px' }}>
+          <div key={book.book_id} className="m-8" style={{ width: '240px' }}>
             <BookCard book={book} handleDelete={handleDelete} />
           </div>
         ))}
