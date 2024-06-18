@@ -3,8 +3,9 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Clock from 'react-clock';
 import Calendar from 'react-calendar';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 type FormData = {
   email: string;
@@ -91,14 +92,21 @@ const LogIn: React.FC = () => {
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
+  const currentTime = format(new Date(), 'HH:mm:ss');
+  const currentDate = format(new Date(), 'eeee, MMMM do, yyyy', { locale: es });
+
   return (
     <div className="bg-cover bg-center h-screen transition-all duration-1000" style={{ backgroundImage: "url('/imgs/img_fondo_login.jpg')", backgroundSize: '75%', maxHeight: "550px" }}>
       <div className="flex justify-center items-center pt-24 border-dashed">
         {/* Bloque Izquierdo (Calendario) */}
-        <div className="w-1/3 mx-10 bg-green-800 rounded-xl bg-opacity-50 text-black hover:bg-white font-extrabold absolute top-1">
+        <div className="w-1/5  bg-green-800 rounded-xl bg-opacity-50 text-black hover:bg-white absolute top-72 left-8">
+          <div className="mt-1 px-4 rounded-lg flex items-center bg-orange-200 gap-1 font-light">
+            <p className="font-semibold">{currentTime}</p>
+            <p>{currentDate}</p>
+          </div>
           <Calendar />
         </div>
-  
+
         {/* Bloque Central (Formulario de Inicio de Sesión) */}
         <div className="w-1/3 hover:bg-green-800 hover:bg-opacity-50 p-5 m-5 rounded-xl">
           <h1 className="text-2xl font-bold mb-4 text-slate-800 hover:text-yellow-500">Logueate</h1>
@@ -135,27 +143,27 @@ const LogIn: React.FC = () => {
               {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
             </div>
             <div className="flex items-center justify-between">
-              <button className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-[40%]" type="submit">
+              <button className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-[40%] mt-14" type="submit">
                 Iniciar sesión
               </button>
             </div>
           </form>
         </div>
-  
+
         {/* Bloque Derecho (Datos Meteorológicos) */}
-        <div className="w-28 items-center self-center rounded-xl absolute right-[360px] top-44 px-5  font-extrabold bg-green-800 bg-opacity-15 hover:bg-white">
+        <div className="w-28 items-center self-center rounded-xl absolute right-[350px] top-[118px] px-2  font-semibold bg-green-800 bg-opacity-15 hover:bg-white">
           {weatherData && (
             <div>
-              <h2>{weatherData.name}</h2>
-              <h3>{Math.round(weatherData.main.temp - 273.15)}°C</h3>
-              <p>{weatherData.weather[0].description}</p>
+              <h2 className="text-3xl text-slate-50">{weatherData.name}</h2>
+              <h3 className="text-5xl text-red-600">{Math.round(weatherData.main.temp - 273.15)}°C</h3>
+              <p className='text-xs text-center text-blue-700 bg-cyan-400 bg-opacity-15'>{weatherData.weather[0].description}</p>
             </div>
           )}
         </div>
       </div>
     </div>
   );
-  
+
 }
 
 export default LogIn;
