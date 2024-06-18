@@ -102,13 +102,13 @@ const LogIn: React.FC = () => {
         <div className="w-1/5  bg-green-800 rounded-xl bg-opacity-50 text-black hover:bg-white absolute top-72 left-8">
           <div className="mt-1 px-4 rounded-lg flex items-center bg-orange-200 gap-1 font-light">
             <p className="font-semibold">{currentTime}</p>
-            <p>{currentDate}</p>
+            <p className="text-pink-600 ">{currentDate}</p>
           </div>
           <Calendar />
         </div>
 
         {/* Bloque Central (Formulario de Inicio de Sesión) */}
-        <div className="w-1/3 hover:bg-green-800 hover:bg-opacity-50 p-5 m-5 rounded-xl">
+        <div className="w-[300px] hover:bg-green-800 hover:bg-opacity-50 p-5 ml-22 rounded-xl">
           <h1 className="text-2xl font-bold mb-4 text-slate-800 hover:text-yellow-500">Logueate</h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="mb-4">
@@ -116,7 +116,7 @@ const LogIn: React.FC = () => {
                 Email:
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-green-100 hover:bg-white"
+                className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:bg-green-100 hover:bg-white w-full"
                 id="email"
                 type="email"
                 name="email"
@@ -143,7 +143,7 @@ const LogIn: React.FC = () => {
               {errors.password && <p className="text-red-500 text-xs italic">{errors.password}</p>}
             </div>
             <div className="flex items-center justify-between">
-              <button className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-[40%] mt-14" type="submit">
+              <button className="bg-yellow-700 hover:bg-yellow-950 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline ml-[30%] mt-20" type="submit">
                 Iniciar sesión
               </button>
             </div>
@@ -154,9 +154,9 @@ const LogIn: React.FC = () => {
         <div className="w-28 items-center self-center rounded-xl absolute right-[350px] top-[118px] px-2  font-semibold bg-green-800 bg-opacity-15 hover:bg-white">
           {weatherData && (
             <div>
-              <h2 className="text-3xl text-slate-50">{weatherData.name}</h2>
+              <h2 className="text-3xl text-yellow-400">{weatherData.name}</h2>
               <h3 className="text-5xl text-red-600">{Math.round(weatherData.main.temp - 273.15)}°C</h3>
-              <p className='text-xs text-center text-blue-700 bg-cyan-400 bg-opacity-15'>{weatherData.weather[0].description}</p>
+              <p className='text-xs text-center text-blue-800 bg-cyan-400 bg-opacity-15'>{weatherData.weather[0].description}</p>
             </div>
           )}
         </div>

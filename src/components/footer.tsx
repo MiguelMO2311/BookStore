@@ -1,4 +1,6 @@
+import { ImYoutube2 } from "react-icons/im"; 
 
+import { TbSquareLetterL } from "react-icons/tb"; 
 import { AiFillTwitterSquare } from "react-icons/ai";
 import { BsInstagram } from "react-icons/bs";
 import { CiLinkedin } from "react-icons/ci";
@@ -15,7 +17,9 @@ const Footer = () => {
             <a className="text-4xl hover:bg-green-700" href="https://www.x.com" target="_blank" rel="noopener noreferrer"><AiFillTwitterSquare /></a>
             <a className="text-4xl hover:bg-green-700" href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><BsInstagram /></a>
             <a className="text-4xl hover:bg-green-700" href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"> <FaFacebookSquare /></a>
-            <a className="text-4xl hover:bg-green-700" href="https://www.amazon.com" target="_blank" rel="noopener noreferrer"><IoLogoAmazon /></a>
+            <a className="text-4xl hover:bg-green-700" href="https://www.casadellibro.com/" target="_blank" rel="noopener noreferrer"> <TbSquareLetterL /> </a>
+            <a className="text-4xl hover:bg-green-700" href="https://www.amazon.es/s?k=libros" target="_blank" rel="noopener noreferrer"><IoLogoAmazon /></a>
+            <a className="text-4xl hover:bg-green-700" href="https://www.youtube.com/results?search_query=libros" target="_blank" rel="noopener noreferrer"><ImYoutube2 /></a>
         </footer>
     );
 };
