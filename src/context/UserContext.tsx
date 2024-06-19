@@ -8,7 +8,7 @@ export const UserContext = createContext<{
   loading: boolean;
 }>({
   user: null, // Inicializa el estado del usuario con null
-  setUser: () => {},
+  setUser: () => { },
   loading: true, // Inicializa el estado de carga con true
 });
 

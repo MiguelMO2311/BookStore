@@ -17,10 +17,10 @@ const Pagina404 = () => {
   }, [contador, navigate]);
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px', alignSelf: 'center', height: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap:'40px' }}>
+    <div style={{ textAlign: 'center', marginTop: '50px', alignSelf: 'center', height: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '40px' }}>
       <h1 className='text-6xl text-sky-600'>404</h1>
       <p className='text-2xl text-black'>
-        Página No encontrada. "Serás redirigido a la página HOME en 
+        Página No encontrada. "Serás redirigido a la página HOME en
         <span style={{ fontWeight: 'bold', color: 'red' }}> {contador} </span>
         segundos".
       </p>

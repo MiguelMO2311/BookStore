@@ -1,8 +1,8 @@
-import { SlMagnifier } from "react-icons/sl"; 
+import { SlMagnifier } from "react-icons/sl";
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-import { AiOutlineUserAdd} from "react-icons/ai";
+import { AiOutlineUserAdd } from "react-icons/ai";
 import axios from 'axios';
 
 type MenuProps = {
@@ -64,7 +64,7 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
                         <button onClick={searchBook} className="ml-3"><SlMagnifier /></button>
                     </div>
                     {book && isbn && (
-                        <a className='absolute top-0  left-[490px] w-[62px] hover:size-60 pt-1' href={book.volumeInfo.previewLink} target="_blank" rel="noopener noreferrer">
+                        <a className='absolute top-0  left-[490px] w-[62px] hover:size-60 pt-1 ' href={book.volumeInfo.previewLink} target="_blank" rel="noopener noreferrer">
                             <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                         </a>
                     )}

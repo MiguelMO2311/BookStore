@@ -2,11 +2,11 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 
 function PrivateRoutes() {
- const user = { email: ''};
-//  const user = null
- if (user) return <Outlet/>
+    const user = { email: '' };
+    //  const user = null
+    if (user) return <Outlet />
 
- return <Navigate to="login"/>
+    return <Navigate to="login" />
 
 }
 

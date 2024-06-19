@@ -10,7 +10,7 @@ const BookItem: React.FC<{ book: Book }> = ({ book }) => {
   const handleEditBook = () => {
     navigate(`/edit-book/${book.book_id}`, { state: { book } });
   };
-  
+
   const handleDeleteBook = () => {
     deleteBook(book.book_id).then(() => {
       console.log(`Libro con ID ${book.book_id} ha sido eliminado.`);

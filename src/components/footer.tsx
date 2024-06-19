@@ -1,6 +1,6 @@
-import { ImYoutube2 } from "react-icons/im"; 
+import { ImYoutube2 } from "react-icons/im";
 
-import { TbSquareLetterL } from "react-icons/tb"; 
+import { TbSquareLetterL } from "react-icons/tb";
 import { AiFillTwitterSquare } from "react-icons/ai";
 import { BsInstagram } from "react-icons/bs";
 import { CiLinkedin } from "react-icons/ci";
