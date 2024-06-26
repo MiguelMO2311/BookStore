@@ -60,7 +60,7 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
             <nav className={`flex ${isOpen ? 'flex-col' : ''} justify-start items-center px-4 text-xl`}>
                 <div className={`flex ${isOpen ? 'flex-col' : ''} justify-start`}>
                     <div className="mr-24 flex items-center rounded-md ">
-                        <input type="text" value={isbn} onChange={(e) => setIsbn(e.target.value)} placeholder="  Busca por ISBN" className="rounded-lg w-44 text-center text-blue-700 font-light italic bg-green-800  hover:bg-white" />
+                        <input type="text" value={isbn} onChange={(e) => setIsbn(e.target.value)} placeholder="  Busca por ISBN" className="rounded-lg w-44 text-center text-lime-600 font-light italic bg-green-800  hover:bg-white" />
                         <button onClick={searchBook} className="ml-3"><SlMagnifier /></button>
                     </div>
                     {book && isbn && (
@@ -82,7 +82,7 @@ const Menu: React.FC<MenuProps> = ({ className, isOpen, setIsOpen }) => {
                     ) : (
                         <>
                             {/* Enlaces para usuario no logueado */}
-                            <NavLink className="ml-8 text-blue-700 hover:text-white" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
+                            <NavLink className="ml-8 text-lime-600 hover:text-white" to="/Home" onClick={() => setIsOpen(false)}>Home</NavLink>
                             <NavLink className="ml-8 text-lime-600 hover:text-white" to="/Register" onClick={() => setIsOpen(false)}>Register</NavLink>
                             <button onClick={handleLogin} className="flex items-center ml-16 text-white hover:bg-yellow-400 hover:text-black focus:outline-none border-2 border-green-700 rounded-lg p-1 transition-colors duration-200 "> <AiOutlineUserAdd size={20} color="white" />
                                 <span className="text-xs ml-1">Log In</span>
