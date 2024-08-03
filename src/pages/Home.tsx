@@ -104,7 +104,7 @@ function Home() {
     >
       {showTitle && (
         <h1
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl opacity-0 animate-fadeInOut size-max"
+          className="absolute top-[350px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl opacity-0 animate-fadeInOut size-max"
         >
           ¡Book Store!
         </h1>
