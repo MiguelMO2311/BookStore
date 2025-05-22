@@ -24,11 +24,19 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   // Cuando se carga la página, comprobamos si hay información del usuario en el localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem('userInfo');
+
     if (storedUser) {
-      setUser(JSON.parse(storedUser)); // Actualizamos el estado del usuario con la información del localStorage
+        try {
+            setUser(JSON.parse(storedUser)); // Guarda el usuario si el JSON es válido
+        } catch (error) {
+            console.error("Error al parsear userInfo:", error);
+            localStorage.removeItem('userInfo'); // Elimina el dato si está corrupto
+        }
     }
-    setLoading(false); // Establecemos el estado de carga en false después de cargar los datos del usuario
-  }, []);
+    
+    setLoading(false); // Finaliza la carga inicial
+
+}, []); // ← Este array vacío asegura que solo se ejecute una vez
 
   // Cuando el estado del usuario cambia, actualizamos la información del usuario en el localStorage
   useEffect(() => {

@@ -22,7 +22,7 @@ function App() {
         <div style={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<Navigate replace to="/home" />} />
-            <Route path="/edit-book/:book_id" Component={EditBook} />
+            <Route path="/edit-book/:book_id" element={<EditBook />} />
 
             <Route path="*" element={<Pagina404 />} />
 
